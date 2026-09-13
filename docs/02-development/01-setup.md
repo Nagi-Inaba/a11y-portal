@@ -12,7 +12,7 @@
 | 実行環境・パッケージ管理 | Node.js 22.x / npm / package-lock.json |
 | スタイル・静的検査 | 通常のCSS / ESLint |
 
-本テンプレートは起動可能な最小構成です。評価の一覧・詳細機能、認証、DBスキーマ・マイグレーションはまだ含みません。Supabase・Vercelのクラウドリソースも、このテンプレートの作成だけでは作成されません。
+本テンプレートは起動可能な最小構成です。評価の一覧・詳細機能、認証、DBスキーマ・マイグレーションはまだ含みません。Supabase・Vercelのクラウドリソースは作成・公開済みで、詳細は「4. Vercelへの公開」に記載しています。
 
 ## 2. ローカルでの起動
 
@@ -49,23 +49,62 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key
 
 ## 4. Vercelへの公開
 
-1. VercelでGitHubリポジトリ`Nagi-Inaba/a11y-portal`をインポートします。
-2. 以下の設定を確認します。
+### 4.1 公開済みのリソース
+
+| 項目 | 値 |
+| --- | --- |
+| 本番URL | <https://a11y-portal.vercel.app> |
+| Vercelアカウント | `seiichiro.tanaka@hyucode.com` |
+| Vercelスコープ | `seiichirotanaka-4515s-projects` |
+| Vercelプロジェクト | `a11y-portal` |
+| Supabase組織 | `seiichiro.tanaka@hyucode.com's Org` |
+| Supabaseプロジェクト | `a11y-portal`（ref `gettckbtspwzaacybfaj` / ap-northeast-1） |
+| Supabaseダッシュボード | <https://supabase.com/dashboard/project/gettckbtspwzaacybfaj> |
+
+### 4.2 ビルド設定
+
+Next.jsの標準構成をそのまま使うため、独自の`vercel.json`は不要です。Vercel側は自動検出された次の設定で動作します。
 
 | 設定 | 値 |
 | --- | --- |
 | Framework Preset | Next.js |
 | Root Directory | リポジトリのルート |
-| Node.js Version | 22.x |
-| Install Command | `npm ci` |
-| Build Command | `npm run build` |
+| Node.js Version | 22.x（`package.json`の`engines`で指定） |
+| Build Command | `next build` |
 | Output Directory | Next.jsのデフォルトのまま |
-| Production Branch | `main` |
 
-3. DB接続を使う段階で、VercelのEnvironment Variablesに`NEXT_PUBLIC_SUPABASE_URL`と`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`を追加します。Production・Preview・Developmentそれぞれ必要な環境に設定します。
-4. Deployを実行し、公開URLでトップページを確認します。
+### 4.3 環境変数
 
-初期トップページは環境変数未設定でもデプロイできます。環境変数の追加・変更後は再デプロイしてください。Next.jsの標準構成を使うため、独自の`vercel.json`は不要です。
+`NEXT_PUBLIC_SUPABASE_URL`と`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`を、Production・Preview・Developmentの3環境へ登録済みです。値はSupabaseのConnectパネル、またはVercelのダッシュボードで確認できます。環境変数を追加・変更した場合は再デプロイが必要です。
+
+ローカルへ取り込む場合は次を実行します。
+
+```sh
+vercel env pull
+```
+
+### 4.4 手動デプロイ
+
+現在はGitHub連携が未設定のため、CLIから直接デプロイします。
+
+```sh
+vercel deploy --prod
+```
+
+### 4.5 GitHub連携（未完了）
+
+`main`へのpushで自動デプロイするには、次の2つが必要です。どちらも本リポジトリ外の操作です。
+
+1. VercelアカウントのGitHub接続をやり直す。現在は接続が失効しており、Vercel経由のGitHub APIが`401 Bad credentials`を返します。<https://vercel.com/account/login-connections>から再接続します。
+2. リポジトリ`Nagi-Inaba/a11y-portal`へVercel GitHub Appをインストールする。インストールにはリポジトリ所有者`Nagi-Inaba`の承認が必要です（`seiichi3141`はWrite権限のみでAdminではありません）。
+
+両方が済んだあと、リポジトリのルートで次を実行して連携します。
+
+```sh
+vercel git connect
+```
+
+所有者の承認が得られない場合は、`seiichi3141`配下へリポジトリを作成して接続先を移す方法もあります。
 
 ## 5. 開発時の確認
 

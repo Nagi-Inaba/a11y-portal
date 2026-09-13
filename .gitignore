@@ -9,3 +9,4 @@ next-env.d.ts
 .vercel/
 .DS_Store
 npm-debug.log*
+supabase/.temp/
