@@ -1,4 +1,5 @@
 import type {
+  AutomatedScan,
   CheckMethod,
   Environment,
   Finding,
@@ -151,6 +152,28 @@ function parseEnvironment(value: unknown, path: string): Environment {
 }
 
 /**
+ * 自動検査の結果を検証する。
+ *
+ * coverageNoteとneedsReviewを必須にする。自動検査の限界と、人の確認が必要な項目を
+ * 書き落としたまま公開できないようにするため。
+ */
+function parseAutomatedScan(value: unknown, path: string): AutomatedScan {
+  const raw = asObject(value, path);
+  return {
+    tool: asString(raw.tool, `${path}.tool`),
+    toolVersion: asString(raw.toolVersion, `${path}.toolVersion`),
+    scannedAt: asIsoDateTime(raw.scannedAt, `${path}.scannedAt`),
+    coverageNote: asString(raw.coverageNote, `${path}.coverageNote`),
+    findings: asArray(raw.findings, `${path}.findings`).map((item, i) =>
+      parseFinding(item, `${path}.findings[${i}]`),
+    ),
+    needsReview: asArray(raw.needsReview, `${path}.needsReview`).map(
+      (item, i) => parseFinding(item, `${path}.needsReview[${i}]`),
+    ),
+  };
+}
+
+/**
  * 評価レポートを検証して返す。形式が違う場合は、どの項目かを示して例外を投げる。
  *
  * データはリポジトリ内のJSONで管理するため、型注釈だけでは実際の中身を保証できない。
@@ -170,6 +193,14 @@ export function parseReport(input: unknown): Report {
     checkedAt: asIsoDateTime(raw.checkedAt, "report.checkedAt"),
     environment: parseEnvironment(raw.environment, "report.environment"),
     source: asMember(raw.source, "report.source", REPORT_SOURCES),
+    ...(raw.automatedScan === undefined
+      ? {}
+      : {
+          automatedScan: parseAutomatedScan(
+            raw.automatedScan,
+            "report.automatedScan",
+          ),
+        }),
     tasks: tasks.map((item, i) => parseTask(item, `report.tasks[${i}]`)),
     limitations: asStringArray(raw.limitations, "report.limitations"),
     contact: asString(raw.contact, "report.contact"),

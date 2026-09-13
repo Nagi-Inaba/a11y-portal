@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
+    "evaluate": "node --experimental-strip-types scripts/evaluate.mts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.116.0",

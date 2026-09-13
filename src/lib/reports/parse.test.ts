@@ -117,3 +117,58 @@ describe("parseReport", () => {
     assert.throws(() => parseReport(input), /checkedAt/);
   });
 });
+
+describe("parseReport の自動検査結果", () => {
+  function scan(): Record<string, unknown> {
+    return {
+      tool: "axe-core",
+      toolVersion: "4.10.0",
+      scannedAt: "2026-09-13T13:30:00+09:00",
+      coverageNote: "機械的に判定できる範囲に限られます。",
+      findings: [
+        {
+          id: "axe-violation-button-name",
+          summary: "ボタンに識別できるテキストがない",
+          affectedUsers: "スクリーンリーダーの利用者",
+          method: "automated",
+          tool: "axe-core (Playwright)",
+          relatedCriteria: [],
+          remediation: "該当箇所: #menu-toggle",
+          reverification: "再実行して報告されないことを確かめる",
+        },
+      ],
+      needsReview: [],
+    };
+  }
+
+  test("自動検査の結果を保持する。検証で落とさない", () => {
+    const input = { ...validReport(), automatedScan: scan() };
+    const report = parseReport(input);
+    assert.equal(report.automatedScan?.tool, "axe-core");
+    assert.equal(report.automatedScan?.findings.length, 1);
+    assert.equal(report.automatedScan?.needsReview.length, 0);
+  });
+
+  test("自動検査を実施していないレポートも受け付ける", () => {
+    const report = parseReport(validReport());
+    assert.equal(report.automatedScan, undefined);
+  });
+
+  test("自動検査の限界を書いていなければ失敗する", () => {
+    const s = scan();
+    delete s.coverageNote;
+    assert.throws(
+      () => parseReport({ ...validReport(), automatedScan: s }),
+      /coverageNote/,
+    );
+  });
+
+  test("要確認の項目を書き忘れていれば失敗する", () => {
+    const s = scan();
+    delete s.needsReview;
+    assert.throws(
+      () => parseReport({ ...validReport(), automatedScan: s }),
+      /needsReview/,
+    );
+  });
+});
