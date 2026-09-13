@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { cache, type ReactNode } from "react";
 import { ArrowLeftIcon, ArrowRightIcon, ArrowSquareOutIcon, ArticleIcon, BookOpenIcon, CheckCircleIcon, CursorIcon, LightbulbIcon, ListNumbersIcon, MonitorIcon, PencilSimpleIcon, UserIcon, WarningCircleIcon } from "@phosphor-icons/react/ssr";
 import { MethodStatuses, ReportDate, ReportThumbnail, SampleNotice, Score } from "@/components/portal";
-import { getReport } from "@/lib/reports/repository";
+import { getPublishedDocument, getReport } from "@/lib/reports/repository";
+import { parseCmsDocument } from "@/lib/cms/document";
+import { ReportDocument } from "@/components/report-document";
 import { formatDate, isExampleUrl, statusLabel } from "@/lib/reports/presentation";
 
 export const dynamic = "force-dynamic";
@@ -29,6 +31,11 @@ export default async function ReportPage({ params }: Props) {
   if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$/.test(id)) notFound();
   const report = await loadReport(id);
   if (!report) notFound();
+  const document = await getPublishedDocument(id);
+  if (document) return <div className="container detail-page">
+    <div className="detail-navigation"><Link className="text-link" href="/reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
+    <h1>{report.title}</h1><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
+  </div>;
   const sample = report.is_sample;
   const env = report.environment;
   const assumption = (value: string | null) => value ? `${value}${sample ? "（想定）" : ""}` : "未記録";

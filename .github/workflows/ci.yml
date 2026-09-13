@@ -40,3 +40,14 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Database policies and publication rules
+        run: npm run test:db
+
+      - name: Public and CMS HTTP tests
+        run: |
+          npm run test:api
+          npm run test:cms

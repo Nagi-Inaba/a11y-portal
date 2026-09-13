@@ -1,6 +1,6 @@
 # レポートAPI
 
-指定デザインの表示用に、公開レポートの一覧・詳細を返す読み取りAPIを実装しています。データは[最小ER](./03-database-er-proposal.md)の22列です。書き込み・認証・履歴管理は含みません。
+公開レポートの一覧・詳細を返す読み取りAPIです。データは[最小ER](./03-database-er-proposal.md)の22列を維持しています。下書き・公開操作は別の[管理者CMS](./05-report-cms.md)が担当します。
 
 ## エンドポイント
 
@@ -46,8 +46,8 @@ curl 'http://localhost:3000/api/reports/SAMPLE-001'
 
 ## Supabaseへ接続
 
-1. `supabase/migrations/20260913000000_create_reports.sql`を使用するSupabase環境へ適用します。この作業ではクラウドへ適用していません。
-2. 管理者として公開可能なレポートを投入します。任意のサンプル投入用に`supabase/seed.sql`があります。ローカルSupabaseでは既存のseed設定から読み込まれます。
+1. `supabase/migrations/`のマイグレーションを順番に適用します。CMS追加分の`20260913010000_report_cms.sql`も必要です。
+2. CMSの管理者を登録し、評価JSONを取り込んで公開します。ローカルSupabaseの`seed.sql`は旧形式のサンプルです。CMS導入後の新規投入は下書きになるため、公開するには同じIDの評価JSONを補完します。
 3. 環境変数を設定して再起動／再デプロイします。
 
 ```dotenv
@@ -58,7 +58,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 
 `REPORTS_DATA_SOURCE`が未設定の場合も`supabase`です。DB接続の失敗や設定不足をサンプルで隠すフォールバックは行いません。DB問い合わせは10秒で打ち切ります。
 
-`reports`は公開可能なデータだけを格納するテーブルです。RLSを有効にし、`anon`・`authenticated`にはSELECTだけを付与します。APIは公開可能キーで読み取り、受信リクエストのユーザー認証情報は使用しません。将来、下書きを保存する場合は、先に公開条件とRLSを変更する必要があります。
+`reports`には下書きと公開済みのレポートを保存します。RLSでは一般利用者に`publication_status = 'published'`の行だけを許可します。公開APIも同じ条件を明示し、受信リクエストの管理者認証情報は使用しません。評価JSONの全文・更新日時・リビジョン等のCMS項目は、この22列のAPIには含めません。公開詳細画面では公開済みの評価JSONも読み、タスク・自動検査・制約・連絡先を表示します。
 
 ## エラー
 
