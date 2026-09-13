@@ -7,6 +7,7 @@ import { MethodStatuses, ReportDate, ReportThumbnail, SampleNotice, Score } from
 import { getPublishedDocument, getReport } from "@/lib/reports/repository";
 import { parseCmsDocument } from "@/lib/cms/document";
 import { ReportDocument } from "@/components/report-document";
+import { CorrectionContact } from "@/components/correction-contact";
 import { formatDate, isExampleUrl, statusLabel } from "@/lib/reports/presentation";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +35,7 @@ export default async function ReportPage({ params }: Props) {
   const document = await getPublishedDocument(id);
   if (document) return <div className="container detail-page">
     <div className="detail-navigation"><Link className="text-link" href="/reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
-    <h1>{report.title}</h1><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
+    <h1>{report.title}</h1><MethodStatuses report={report} /><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
   </div>;
   const sample = report.is_sample;
   const env = report.environment;
@@ -58,7 +59,7 @@ export default async function ReportPage({ params }: Props) {
       <section className="environment-section"><h2><MonitorIcon aria-hidden="true" />確認環境{sample && "（サンプル）"}</h2><dl className="environment"><div><dt>OS</dt><dd>{assumption(env.os)}</dd></div><div><dt>ブラウザ</dt><dd>{assumption(env.browser)}</dd></div><div><dt>支援技術</dt><dd>{assumption(env.assistive_technology)}</dd></div><div><dt>バージョン</dt><dd>{versions || "未記録"}</dd></div><div><dt>キーボード操作</dt><dd>{statusLabel(env.keyboard_status, sample)}</dd></div></dl></section>
       <section><h2><WarningCircleIcon aria-hidden="true" />未確認の範囲</h2>{report.unverified_scope.length ? <ul className="plain-list">{report.unverified_scope.map(item => <li key={item}>{item}</li>)}</ul> : <p>未記録</p>}</section>
       <section><h2><BookOpenIcon aria-hidden="true" />関連する基準</h2><p>{report.standards_note}</p></section>
-      <section><h2><PencilSimpleIcon aria-hidden="true" />補足・訂正</h2><p>連絡先は公開前に設定します。</p><Link className="text-link" href="/#corrections">補足・訂正について<ArrowRightIcon aria-hidden="true" /></Link></section>
+      <section><h2><PencilSimpleIcon aria-hidden="true" />補足・訂正</h2><CorrectionContact reportId={report.id} targetUrl={report.target_url} /><Link className="text-link" href="/#corrections">補足・訂正について<ArrowRightIcon aria-hidden="true" /></Link></section>
     </aside></div>
     <div className="detail-bottom"><Link className="text-link" href="/#recent-reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
   </div>;

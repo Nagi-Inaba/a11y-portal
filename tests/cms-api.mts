@@ -62,7 +62,11 @@ try {
     assert.ok(record.published_at);
     const publicDetail = await fetch(`${base}/api/reports/${draft.id}`);
     assert.equal(publicDetail.status, 200); assert.equal(Object.keys((await publicDetail.json()).data).length, 22);
-    assert.ok((await (await fetch(`${base}/reports/${draft.id}`)).text()).includes(complete.contact));
+    const publishedHtml = await (await fetch(`${base}/reports/${draft.id}`)).text();
+    assert.ok(publishedHtml.includes(complete.contact));
+    assert.ok(publishedHtml.includes('GitHubで補足・訂正を連絡する'));
+    assert.ok(publishedHtml.includes('/Nagi-Inaba/a11y-portal/issues/new?'));
+    for (const label of ['自動検査', '操作確認', '再評価']) assert.ok(publishedHtml.includes(label));
     assert.ok((await (await fetch(`${base}/reports`)).text()).includes(draft.id));
     assert.ok((await (await fetch(base)).text()).includes(draft.id));
     assert.equal((await api(adminPath, 'PATCH', { action: 'save', document: complete, revision: record.revision })).status, 409);

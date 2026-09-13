@@ -17,3 +17,9 @@
 .report-header .report-thumbnail img{max-width:100%}.report-site-name{grid-column:2;font-size:1rem;margin:0}
 .report-header h1{grid-column:2;font-size:1.25rem}.report-facts,.header-score{grid-column:1 / -1}
 }
+
+.method-statuses-compact{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem}
+.method-statuses-compact>div,.method-statuses-compact>div.has-issue{justify-content:flex-start;gap:.5rem;border:0;background:transparent;padding:0}
+.method-statuses-compact dt svg{display:none}
+.method-statuses-compact dd{padding:2px 6px}
+.correction-contact p+p{margin-top:.75rem}
