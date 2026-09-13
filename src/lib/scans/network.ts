@@ -23,7 +23,7 @@ export function publicIPv4(address: string) { return isIPv4(address) && !reserve
 export async function createScanProxy(origins: string[], transport = {
   resolve: (host: string): Promise<string[]> => resolve4(host),
   connect: (address: string, port: number): Socket => connect({ host: address, port }),
-}) {
+}, options: { allowHttpTunnel?: boolean } = {}) {
   const allowed = new Set(origins.map(value => {
     const url = scanUrl(value); if (url.origin !== value) throw new ScanFailure("network_blocked"); return url.origin;
   }));
@@ -74,8 +74,11 @@ export async function createScanProxy(origins: string[], transport = {
   server.on("connect",async (req,client,head)=>{
     const socket=client as Socket;
     try {
-      const { address }=await destination(`https://${req.url}/`);
-      const upstream=remember(transport.connect(address,443));
+      // Playwright's APIRequestContext tunnels HTTP too. Only comparison workers opt in;
+      // the same origin, standard-port, public-address and pinned-connection rules apply.
+      const port=options.allowHttpTunnel&&req.url?.endsWith(":80")?80:443;
+      const { address }=await destination(`${port===80?"http":"https"}://${req.url}/`);
+      const upstream=remember(transport.connect(address,port));
       upstream.on("error",()=>socket.destroy()); socket.on("close",()=>upstream.destroy()); upstream.on("close",()=>socket.destroy());
       await once(upstream,"connect");
       if (closed) { upstream.destroy(); return; }

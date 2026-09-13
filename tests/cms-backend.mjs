@@ -25,6 +25,7 @@ export async function createDatabase() {
   await db.exec(await readFile('supabase/migrations/20260913010000_report_cms.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/20260914000000_submissions_and_history.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/20260914010000_scan_jobs.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/20260914020000_comparisons.sql', 'utf8'));
   await db.query('insert into public.scan_workers values ($1)', [WORKER_ID]);
   await db.query('insert into public.report_admins values ($1)', [ADMIN_ID]);
   return db;
@@ -72,13 +73,13 @@ export async function createCmsBackend() {
       }
       if (url.pathname.startsWith('/rest/v1/rpc/')) {
         const name = url.pathname.slice('/rest/v1/rpc/'.length);
-        if (!['create_report_submission', 'update_report_submission', 'accept_report_submission','save_scan_target','enqueue_scan','enqueue_scheduled_scans','claim_scan_job','finish_scan_job','create_scan_submission'].includes(name) || req.method !== 'POST') throw new Error('Unexpected test RPC');
+        if (!['create_report_submission', 'update_report_submission', 'accept_report_submission','save_scan_target','enqueue_scan','enqueue_scheduled_scans','claim_scan_job','finish_scan_job','create_scan_submission','create_comparison_case','enqueue_comparison_run','claim_comparison_run','record_comparison_progress','finish_comparison_run','review_comparison_run','publish_comparison'].includes(name) || req.method !== 'POST') throw new Error('Unexpected test RPC');
         const keys = Object.keys(body);
         const result = await asUser(db, token, tx => tx.query(`select public.${identifier(name)}(${keys.map((key, i) => `${identifier(key)} => $${i + 1}`).join(',')}) as value`, keys.map(key => typeof body[key] === 'object' && body[key] !== null && !Array.isArray(body[key]) ? JSON.stringify(body[key]) : body[key])));
         return res.end(JSON.stringify(result.rows[0].value));
       }
       const table = url.pathname.replace('/rest/v1/', '');
-      if (!['reports', 'report_admins', 'report_submissions', 'report_revisions','scan_targets','scan_jobs','scan_job_attempts'].includes(table)) { res.writeHead(404); return res.end('{}'); }
+      if (!['reports', 'report_admins', 'report_submissions', 'report_revisions','scan_targets','scan_jobs','scan_job_attempts','comparison_cases','comparison_runs','comparison_observations','comparison_publications'].includes(table)) { res.writeHead(404); return res.end('{}'); }
       const selected = (url.searchParams.get('select') ?? '*').split(',').map(value => value === '*' ? '*' : identifier(value)).join(',');
       const values = [];
       const bind = value => { values.push(value); return `$${values.length}`; };

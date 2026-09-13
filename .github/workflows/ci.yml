@@ -53,3 +53,4 @@ jobs:
           npm run test:cms
           npm run test:submissions
           npm run test:scans
+          npm run test:comparisons
