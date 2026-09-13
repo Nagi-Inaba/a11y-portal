@@ -13,7 +13,7 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
     "target_page_name": "【架空評価】申請フォーム：操作を完了できない",
     "target_url": "https://evaluation.example/application",
     "operation_summary": "申請フォームを入力して送信する",
-    "scope_summary": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+    "scope_summary": "評価スコア（ダミー）：45 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
     "checked_on": null,
     "is_sample": true,
     "auto_check_status": "issues_found",
@@ -51,14 +51,14 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
       "id": "SAMPLE-EVAL-001",
       "siteName": "【架空評価】申請フォーム：操作を完了できない",
       "targetUrl": "https://evaluation.example/application",
-      "scope": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+      "scope": "評価スコア（ダミー）：45 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
       "checkedAt": "2026-09-13T00:00:00+09:00",
+      "source": "sample",
       "environment": {
         "os": "macOS（想定環境）",
         "browser": "Safari（操作確認の想定）／Chromium（自動検査の想定）",
         "assistiveTech": "VoiceOver（想定環境）"
       },
-      "source": "sample",
       "automatedScan": {
         "tool": "axe-core（ダミー結果）",
         "toolVersion": "架空版",
@@ -131,7 +131,7 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
     "target_page_name": "【架空評価】検索：工夫して操作を完了",
     "target_url": "https://evaluation.example/search",
     "operation_summary": "手続き名で検索して案内ページを開く",
-    "scope_summary": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+    "scope_summary": "評価スコア（ダミー）：70 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
     "checked_on": null,
     "is_sample": true,
     "auto_check_status": "no_issues_found",
@@ -169,14 +169,14 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
       "id": "SAMPLE-EVAL-002",
       "siteName": "【架空評価】検索：工夫して操作を完了",
       "targetUrl": "https://evaluation.example/search",
-      "scope": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+      "scope": "評価スコア（ダミー）：70 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
       "checkedAt": "2026-09-13T00:00:00+09:00",
+      "source": "sample",
       "environment": {
         "os": "macOS（想定環境）",
         "browser": "Safari（操作確認の想定）／Chromium（自動検査の想定）",
         "assistiveTech": "VoiceOver（想定環境）"
       },
-      "source": "sample",
       "automatedScan": {
         "tool": "axe-core（ダミー結果）",
         "toolVersion": "架空版",
@@ -227,7 +227,7 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
     "target_page_name": "【架空評価】申請フォーム：修正後の再確認",
     "target_url": "https://evaluation.example/application-fixed",
     "operation_summary": "修正後の申請フォームで入力から送信まで完了する",
-    "scope_summary": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+    "scope_summary": "評価スコア（ダミー）：90 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
     "checked_on": null,
     "is_sample": true,
     "auto_check_status": "no_issues_found",
@@ -263,14 +263,14 @@ select id, title, thumbnail_path, target_page_name, target_url, operation_summar
       "id": "SAMPLE-EVAL-003",
       "siteName": "【架空評価】申請フォーム：修正後の再確認",
       "targetUrl": "https://evaluation.example/application-fixed",
-      "scope": "画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+      "scope": "評価スコア（ダミー）：90 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
       "checkedAt": "2026-09-13T00:00:00+09:00",
+      "source": "sample",
       "environment": {
         "os": "macOS（想定環境）",
         "browser": "Safari（操作確認の想定）／Chromium（自動検査の想定）",
         "assistiveTech": "VoiceOver（想定環境）"
       },
-      "source": "sample",
       "automatedScan": {
         "tool": "axe-core（ダミー結果）",
         "toolVersion": "架空版",
