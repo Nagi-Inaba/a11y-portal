@@ -29,13 +29,15 @@ jobs:
         with:
           version: latest
 
+      # Management APIは使わず、接続文字列でDBへ直接つなぐ。`supabase link`が不要になり、
+      # アクセストークンも持たせずに済む。権限はDBユーザーの範囲に限定される。
+      #
+      # 接続先はSession pooler（5432）。`db.<ref>.supabase.co`はAAAAレコードしか持たず、
+      # GitHub ActionsのランナーはIPv4のみのため、直接接続では名前解決できない。
       - name: Apply migrations
         env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
-        run: |
-          supabase link --project-ref "${{ secrets.SUPABASE_PROJECT_REF }}"
-          supabase db push
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: supabase db push --db-url "$SUPABASE_DB_URL"
 
   deploy:
     name: Production deploy

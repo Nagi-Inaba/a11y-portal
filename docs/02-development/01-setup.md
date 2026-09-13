@@ -128,11 +128,15 @@ Vercel GitHub Appは使いません。Appのインストールにはリポジト
 | `VERCEL_TOKEN` | Vercelの[Account Tokens](https://vercel.com/account/settings/tokens)で発行したトークン |
 | `VERCEL_ORG_ID` | Vercelスコープのid。`.vercel/project.json`の`orgId` |
 | `VERCEL_PROJECT_ID` | Vercelプロジェクトのid。`.vercel/project.json`の`projectId` |
-| `SUPABASE_ACCESS_TOKEN` | Supabaseの[Access Tokens](https://supabase.com/dashboard/account/tokens)で発行したトークン |
-| `SUPABASE_DB_PASSWORD` | Supabaseプロジェクト作成時に設定したDBパスワード |
-| `SUPABASE_PROJECT_REF` | Supabaseプロジェクトのref |
+| `SUPABASE_DB_URL` | SupabaseのSession pooler（ポート5432）への接続文字列。DBパスワードを含む |
 
 `.vercel/project.json`は`vercel link`で生成され、Gitの管理対象外です。
+
+`migrate`ジョブはSupabaseのManagement APIを使いません。`supabase db push`へ接続文字列を直接渡すため、アクセストークンは不要です。CIへ渡す権限がDBユーザーの範囲に収まります。
+
+接続先はSession pooler（ポート5432）です。直接接続用の`db.<ref>.supabase.co`はAAAAレコードしか持たず、GitHub ActionsのランナーはIPv4のみのため名前解決できません。接続文字列はSupabaseのConnectパネルで確認できます。
+
+Transaction pooler（ポート6543）は使えません。マイグレーションに必要なセッション単位の機能が利用できないためです。
 
 #### コミット作者の権限
 
