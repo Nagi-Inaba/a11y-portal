@@ -76,6 +76,26 @@ export interface Environment {
   assistiveTech?: string;
 }
 
+/**
+ * ページ全体の自動検査結果。
+ *
+ * 自動検査はページ全体を対象にするため、特定のタスクへは紐づかない。Taskとは
+ * 別の器に入れ、画面でも分けて表示する。自動検査で問題が出ないことは、その操作を
+ * 完了できることを意味しない。
+ */
+export interface AutomatedScan {
+  /** 使用したツール。例: "axe-core" */
+  tool: string;
+  toolVersion: string;
+  /** 検査した日時。ISO 8601。 */
+  scannedAt: string;
+  /** 検査できた範囲と、その限界。 */
+  coverageNote: string;
+  findings: Finding[];
+  /** 自動では判断できず、人の確認が必要と報告された項目。 */
+  needsReview: Finding[];
+}
+
 /** 1サイト・1ページぶんの評価レポート。 */
 export interface Report {
   id: string;
@@ -87,6 +107,12 @@ export interface Report {
   checkedAt: string;
   environment: Environment;
   source: ReportSource;
+  /** 自動検査を実施した場合のみ。 */
+  automatedScan?: AutomatedScan;
+  /**
+   * 人による操作確認。自動検査だけで公開しないよう、1件以上を必須とする。
+   * 未確認の場合もoutcomeをnot-verifiedにして残す。
+   */
   tasks: Task[];
   /** 未確認の範囲。 */
   limitations: string[];
