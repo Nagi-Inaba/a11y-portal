@@ -48,3 +48,18 @@ export async function getReport(id: string): Promise<Report | null> {
   if (error) throw new ReportsUnavailableError("Report query failed");
   return data;
 }
+
+/** TOPの最近の5件。APIのID順ページングとは別の取得順。 */
+export async function recentReports(): Promise<Report[]> {
+  if (dataSource() === "sample") {
+    return [...sampleReports].sort((a, b) =>
+      (b.checked_on ?? "").localeCompare(a.checked_on ?? "") || a.id.localeCompare(b.id)
+    ).slice(0, 5);
+  }
+  const { data, error } = await createSupabaseClient().from("reports").select(columns)
+    .order("checked_on", { ascending: false, nullsFirst: false })
+    .order("id", { ascending: true }).limit(5)
+    .abortSignal(AbortSignal.timeout(10_000)).returns<Report[]>();
+  if (error || !data) throw new ReportsUnavailableError("Recent reports query failed");
+  return data;
+}
