@@ -52,3 +52,4 @@ jobs:
           npm run test:api
           npm run test:cms
           npm run test:submissions
+          npm run test:scans

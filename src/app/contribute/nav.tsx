@@ -7,7 +7,7 @@ export function ContributionNav() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  return <><nav className="admin-nav" aria-label="投稿者メニュー"><Link href="/contribute">自分の投稿</Link><Link href="/reports">公開レポート</Link>
+  return <><nav className="admin-nav" aria-label="投稿者メニュー"><Link href="/contribute">自分の投稿</Link><Link href="/contribute/scans">自動検査</Link><Link href="/reports">公開レポート</Link>
     <button className="secondary" disabled={busy} onClick={async () => {
       setBusy(true); setError("");
       try { await cmsRequest("/api/contributor/session", "DELETE"); router.replace("/contribute/login"); router.refresh(); }

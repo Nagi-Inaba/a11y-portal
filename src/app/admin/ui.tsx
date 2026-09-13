@@ -37,7 +37,7 @@ export function AdminNav() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  return <><nav className="admin-nav" aria-label="管理者メニュー"><Link href="/admin/reports">レポート管理</Link><Link href="/admin/submissions">投稿のレビュー</Link><Link href="/reports">公開レポート</Link>
+  return <><nav className="admin-nav" aria-label="管理者メニュー"><Link href="/admin/reports">レポート管理</Link><Link href="/admin/submissions">投稿のレビュー</Link><Link href="/admin/scan-targets">検査対象</Link><Link href="/contribute/scans">自動検査</Link><Link href="/reports">公開レポート</Link>
     <button className="secondary" disabled={busy} onClick={async () => {
       setBusy(true); setError("");
       try { await cmsRequest("/api/admin/session", "DELETE"); router.replace("/admin/login"); router.refresh(); }
