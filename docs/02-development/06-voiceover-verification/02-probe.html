@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VoiceOver activation probe</title><style>body{font:22px sans-serif;margin:24px}button,a,input{display:block;margin:20px 0;padding:15px}pre{font-size:12px;white-space:pre-wrap}</style><h1>Activation probe</h1><button id="test">Test activation</button><p id="result" role="status">Count 0</p><a id="link" href="#destination">Test link</a><h2 id="destination">Destination heading</h2><input id="text" aria-label="Test text"><pre id="display" aria-hidden="true"></pre><script>
+let count=0; const session=new URL(location.href).searchParams.get('case')||'initial';
+function record(e){const data={session,type:e.type,target:e.target.id||e.target.nodeName,key:e.key,code:e.code,ctrl:e.ctrlKey,alt:e.altKey,shift:e.shiftKey,meta:e.metaKey,trusted:e.isTrusted,detail:e.detail,active:document.activeElement?.id,count,time:performance.now()};fetch('/event',{method:'POST',body:JSON.stringify(data)});document.getElementById('display').textContent=JSON.stringify(data);}
+for(const type of ['keydown','keyup','focusin','focusout','pointerdown','pointerup','touchstart','touchend','mousedown','mouseup','click'])document.addEventListener(type,record,true);
+document.getElementById('test').addEventListener('click',()=>{count++;document.getElementById('result').textContent='Count '+count;record({type:'activated',target:document.getElementById('test')});});
+window.addEventListener('hashchange',e=>record({type:'hashchange',target:document.getElementById('link')}));
+record({type:'loaded',target:document.body});
+</script></html>

@@ -6,7 +6,7 @@
 
 iOS Simulator内のVoiceOverは、`simctl`による起動・停止と、キーボード入力による項目移動・読み上げテキスト取得が可能だった。Webページの読み順、見出し・ランドマークの読み上げを調べる補助として使える。
 
-一方、`VO + Space`による決定は成功しない。原因はSimulator内のVoiceOverがタッチ層と接続されていないことで、キー入力の送り方では解決できない（[8. 決定が効かない原因](#8-決定が効かない原因)）。**ボタンの実行やリンク遷移を含む、VoiceOverだけでの操作完了を自動評価する手順は未確立**である。コマンドの終了コードが0でも、画面や読み上げが期待どおり変化したかを別途確認する。
+一方、今回のXcode 26.6と`defaults`・`launchctl`で起動する経路では、`VO + Space`による決定は成功しなかった。キーは決定コマンドとして認識されるが、合成タップの座標が`{0, 0}`、ウィンドウIDが`0`になることを再検証した（[8. 決定が効かない原因](#8-決定が効かない原因)）。タッチ処理との連携不全が疑われるものの、内部原因や全バージョンでの不可能性までは確定していない。**この経路での、ボタンの実行やリンク遷移を含むVoiceOverだけの操作完了は未確立**である。コマンドの終了コードが0でも、画面や読み上げが期待どおり変化したかを別途確認する。
 
 ここでいうVoiceOverはSimulator内のiOS版。macOS版VoiceOverを起動してSimulatorのアクセシビリティツリーを読む方法とは区別する。
 
@@ -244,7 +244,9 @@ backboardd: [AXCommon] Simulating press: { point = "NSPoint: {0, 0}"; windowCont
 
 比較として`VO + →`（次の項目）では、フォーカス要素の座標（例: `Hit test point is {198, 118} with window context id 3902476443`）が解決されている。決定だけが座標とウインドウを失っている。
 
-同じSimulatorで、VoiceOver起動中にボタンへ単発タップを送ると、VoiceOverに横取りされず（本来は単発タップでフォーカス移動、ダブルタップで決定になる）、そのままページの`click`として実行された。AXeのHIDタップ、AXeの物理タッチ、macOS側のマウスクリック（`osascript`の`click at`）のいずれでも同じだった。つまりこのSimulatorではVoiceOverのタッチ層が入力経路に組み込まれておらず、キーボードによる決定はそのタッチ層に依存するため失敗する。Simulator上のVoiceOverはAppleが動作保証しておらず、この状態はSimulatorの制約と考える。
+同じSimulatorで、VoiceOver起動中にボタンへ単発タップを送ると、VoiceOverのフォーカス移動だけにならず、そのままページの`click`として実行された。初回調査ではAXeのHIDタップ、AXeの物理タッチ、macOS側のマウスクリック（`osascript`の`click at`）のいずれでも同じだった。
+
+ここまでが観測結果である。「VoiceOverのタッチ処理が入力経路と適切に連携していない」という説明は、これらの結果からの推論。ログだけでは、座標の取得・保持・受け渡しのどこで問題が起きたか、またタッチ層が完全に未接続なのかを確定できない。この実験からSimulator全般の制約や、別の起動・入力経路でも解決不能であることまでは断定しない。
 
 次はいずれも効果がなかった。
 
@@ -256,7 +258,42 @@ backboardd: [AXCommon] Simulating press: { point = "NSPoint: {0, 0}"; windowCont
 
 ページ側の`document.activeElement`にフォーカスがある場合、修飾キーなしの`Return`または`Space`でその要素は実行できる。ただし、DOMフォーカスはVoiceOverカーソルに追従しなかった。VoiceOverカーソルを見出し→ボタンへ動かしたときはボタンに`focusin`が入ったが、その先のリンクやテキスト入力に移してもフォーカスはボタンに残り、`Return`でボタンが実行された。この方法はVoiceOverによる決定ではなく、判定の根拠にも使わない。
 
-決定・遷移を含む操作の評価は、実機のVoiceOverで行う。Simulatorでは項目の到達確認と読み上げ内容・順序の記録に限定する。
+この文書で検証した経路では、Simulatorを項目の到達確認と読み上げ内容・順序の記録に使い、決定・遷移を含む操作は実機のVoiceOverで確認する。
+
+### 8.1 独立した再検証
+
+2026-09-13 15:47〜15:50 JSTに、コミット`9111f9a`の中心的な観測を再検証した。環境はXcode 26.6、iOS 26.5（23F77）、iPhone 17、AXe 1.8.0。macOS版VoiceOverは起動していない。初回調査のログとは別に、新しいHTTPサーバーとログファイルを使った。
+
+検証ページは`click`、`focusin`などをサーバーに記録し、ボタン実行回数も数える。操作ごとにCLI実行の開始・終了時刻を保存し、同時に取得したVoiceOver／backboarddのログと照合した。
+
+| 検証 | 今回の観測 | 判定 |
+| --- | --- | --- |
+| Webボタンに移動して`VO + Space` | 発話は`Test activation`。15:47:58.564に「アクティベート」と解決し、直後に`point={0,0}`、`windowContextID=0`。`click`はなく、次項目の発話は`Count 0` | 再現 |
+| Webリンクに移動して`VO + Space` | 発話は`Test link`。決定時に同じゼロ座標。`click`も`hashchange`も発生しない | 再現 |
+| リンクを選択した状態で通常のReturn | DOMフォーカスが残った`test`ボタンに`click`が届き、Countが0→1。リンクは実行されない | VoiceOverの決定の代用にはならないことを再現 |
+| VoiceOver有効中の単発タップ | AXeの`physical`でCountが1→2、`simulator`で2→3。それぞれ1回の`click` | 調べた2経路ではタップが直接実行されることを再現 |
+| ネイティブの標準`UIButton` | 決定時に同じゼロ座標、ボタンの実行記録なし | 再現 |
+| `accessibilityActivate`を記録する独自ボタン | `VO + Space`で受信・実行記録なし。後の物理タップでは`count=1 VO=1`を記録 | HTML固有の問題ではないという判断を補強 |
+
+ナビゲーションでは、同じログ内で`Hit test point is {79, 196}`のような非ゼロ座標と非ゼロのウィンドウIDも取得できている。決定の失敗を、ページ側のクリック処理や修飾キーの競合だけで説明する根拠はない。
+
+証跡と再現用ページ:
+
+- [操作時刻・ページイベント・システムログ抜粋](06-voiceover-verification/01-results.json)
+- [イベント計測用HTML](06-voiceover-verification/02-probe.html)
+- [ローカル計測サーバー](06-voiceover-verification/03-server.py)
+
+サーバーは`python3 docs/02-development/06-voiceover-verification/03-server.py`で起動し、Simulatorから`http://127.0.0.1:18767/?case=retest`を開く。ポート18767を使い、同じディレクトリの`events.jsonl`へ記録する。終了時はサーバーをControl-Cで停止し、VoiceOverも変更前の状態に戻す。
+
+今回の再検証は上表の範囲に限る。初回調査にある再起動、右修飾キー、Quick Nav、ダブルタップ、macOSのマウス入力をすべて再試行したわけではない。これらを今回の独立再現済み項目に含めない。
+
+### 8.2 新しい公式APIと結論の適用範囲
+
+AppleはiOS 27以降を対象とする[`XCUIVoiceOverService`](https://developer.apple.com/documentation/xcuiautomation/xcuivoiceoverservice)を公開している。`XCUIDevice.voiceOverService`から有効化・無効化、前後移動、現在の発話の取得などを行う。2026-09-13に確認した資料ではベータAPIとして案内されている。
+
+[WWDC26のAccessibility Technologies Group Lab（21:49〜）](https://developer.apple.com/videos/play/wwdc2026/8005/?time=1309)でも、Xcode 27の新しいVoiceOverテストAPIとSimulatorでの動作について説明されている。したがって、今回の`defaults`・`launchctl`経路での失敗を、すべてのSimulatorの仕様として一般化することはできない。
+
+手元のXcode 26.6に含まれるヘッダー・Swiftインターフェース・TBDを検索した範囲では、このAPIは見つからなかった。Xcode 27経由の動作は今回未検証。また、確認したクラスの公開メソッド一覧に決定専用メソッドはなく、このAPIを導入すれば今回の決定問題が解消するとまでは主張しない。公式経路で起動した場合のタッチ入力と決定処理は、次に切り分ける対象である。
 
 ## 9. 参照情報
 
@@ -265,3 +302,5 @@ backboardd: [AXCommon] Simulating press: { point = "NSPoint: {0, 0}"; windowCont
 - [Programmatic VoiceOver Control on iOS Simulator](https://gist.github.com/usirin/5fd1d4599adaa330b7f3344331d10180) — 起動・停止などを実験した著者の調査記録。そこに記載された方法も、この文書では実際に確認した範囲だけを成功扱いとしている。
 - [AXe: Keyboard & Text Input](https://www.axe-cli.com/docs/keyboard-input) — HID入力の仕様。
 - [Apple: Accessibility Inspector](https://developer.apple.com/documentation/accessibility/accessibility-inspector) — アクセシビリティ情報の調査・監査を補助するツール。
+- [Apple: XCUIVoiceOverService](https://developer.apple.com/documentation/xcuiautomation/xcuivoiceoverservice) — iOS 27以降のVoiceOverテストAPI。2026-09-13確認。
+- [Apple: Accessibility Technologies Group Lab, WWDC26](https://developer.apple.com/videos/play/wwdc2026/8005/?time=1309) — 新しいテストAPIとSimulatorについての説明。2026-09-13確認。
