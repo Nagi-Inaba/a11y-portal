@@ -2,7 +2,7 @@
 
 Webサイトの操作で困る箇所と改善方法を共有する、Webアクセシビリティ評価ポータルです。
 
-**Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** を使用します。トップページ、レポート一覧・詳細の読み取りAPI、`reports`テーブルのマイグレーションを用意しています。詳細画面・認証は未実装で、クラウドDBへの適用は別途必要です。
+**Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** を使用します。TOP画面、レポート詳細画面、一覧・詳細の読み取りAPI、`reports`テーブルのマイグレーションを用意しています。認証は未実装で、クラウドDBへの適用は別途必要です。
 
 ## 起動
 
@@ -17,6 +17,8 @@ npm run dev
 <http://localhost:3000>を開きます。Supabaseの環境変数が未設定でもトップページは表示できます。
 
 `.env.example`の`REPORTS_DATA_SOURCE=sample`では、`/api/reports`と`/api/reports/SAMPLE-001`から架空のレポートを取得できます。DB接続時は`supabase`へ変更してください。
+
+画面は `/`（TOP）と `/reports/SAMPLE-001`（サンプル詳細）です。最近のレポートは確認日順で最大5件、存在するデータのみ表示します。サンプルの82点と評価日は画面設計用の表示例で、DBの実測値ではありません。実測データの採点方法は未定のため「未採点」と表示します。データ取得に失敗した場合は再読み込み、存在しないレポートには404画面を表示します。
 
 ## 確認コマンド
 
