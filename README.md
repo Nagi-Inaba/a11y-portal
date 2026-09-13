@@ -2,7 +2,7 @@
 
 Webサイトの操作で困る箇所と改善方法を共有する、Webアクセシビリティ評価ポータルです。
 
-現在は **Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** の初期テンプレートです。トップページと接続用コードを用意しています。評価機能・認証・DBテーブルは今後実装します。
+**Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** を使用します。トップページ、レポート一覧・詳細の読み取りAPI、`reports`テーブルのマイグレーションを用意しています。詳細画面・認証は未実装で、クラウドDBへの適用は別途必要です。
 
 ## 起動
 
@@ -16,12 +16,15 @@ npm run dev
 
 <http://localhost:3000>を開きます。Supabaseの環境変数が未設定でもトップページは表示できます。
 
+`.env.example`の`REPORTS_DATA_SOURCE=sample`では、`/api/reports`と`/api/reports/SAMPLE-001`から架空のレポートを取得できます。DB接続時は`supabase`へ変更してください。
+
 ## 確認コマンド
 
 ```sh
 npm run lint
 npm run typecheck
 npm run build
+npm run test:api
 npm run start
 ```
 
@@ -42,5 +45,8 @@ docs/
 - [セットアップ・Vercelへの公開手順](docs/02-development/01-setup.md)
 - [ブランチ戦略](docs/02-development/02-branch-strategy.md)
 - [評価の仕組み](docs/02-development/03-evaluation.md)
+- [フェーズ別システム構成図](docs/02-development/02-system-architecture.md)
+- [最小DB・ER設計案](docs/02-development/03-database-er-proposal.md)
+- [レポートAPIの使い方](docs/02-development/04-reports-api.md)
 
 `docs`配下のディレクトリ・ファイルには、`01-`のような2桁の番号を付けて順序を固定します。
