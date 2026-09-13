@@ -20,7 +20,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
     <nav className="tabs" aria-label="レポートの公開状態"><Link href="/admin/reports" aria-current={status === "draft" ? "page" : undefined}>下書き</Link><Link href="/admin/reports?status=published" aria-current={status === "published" ? "page" : undefined}>公開済み</Link></nav>
     <h2>{status === "draft" ? "下書き" : "公開済み"}{!error ? `（${count ?? 0}件）` : ""}</h2>
     {error ? <p role="alert" className="notice error">レポートを取得できませんでした。時間をおいて再読み込みしてください。</p> : <>
-      {!data?.length ? <p className="panel">{status === "draft" ? "下書きはありません。評価JSONを取り込むと、ここに表示されます。" : "公開済みのレポートはありません。"}</p> : <ul className="report-list">{data.map(report => <li className="panel" key={report.id}>
+      {!data?.length ? <p className="panel">{status === "draft" ? "下書きはありません。評価JSONを取り込むと、ここに表示されます。" : "公開済みのレポートはありません。"}</p> : <ul className="cms-report-list">{data.map(report => <li className="panel" key={report.id}>
         <div><span className="badge">{report.publication_status === "draft" ? "下書き" : "公開済み"}</span><h3><Link href={`/admin/reports/${encodeURIComponent(report.id)}`}>{report.title}</Link></h3><p className="muted">ID: {report.id}</p></div>
         <p>更新：<time dateTime={report.updated_at}>{new Date(report.updated_at).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" })}（日本時間）</time></p>
       </li>)}</ul>}

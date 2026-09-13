@@ -20,6 +20,8 @@ npm run dev
 
 公開画面は`/reports`、管理者画面は`/admin`です。サンプルモードではCMSへのログイン・保存はできません。[CMSの導入・操作手順](docs/02-development/05-report-cms.md)を参照してください。
 
+画面は `/`（TOP）と `/reports/SAMPLE-001`（サンプル詳細）です。最近のレポートは確認日順で最大5件、存在するデータのみ表示します。サンプルの82点と評価日は画面設計用の表示例で、DBの実測値ではありません。実測データの採点方法は未定のため「未採点」と表示します。データ取得に失敗した場合は再読み込み、存在しないレポートには404画面を表示します。
+
 ## 確認コマンド
 
 ```sh
@@ -52,6 +54,7 @@ docs/
 - [セットアップ・Vercelへの公開手順](docs/02-development/01-setup.md)
 - [ブランチ戦略](docs/02-development/02-branch-strategy.md)
 - [評価の仕組み](docs/02-development/03-evaluation.md)
+- [iOS SimulatorのVoiceOverをCLIで検証する](docs/02-development/05-ios-simulator-voiceover-cli.md)
 - [フェーズ別システム構成図](docs/02-development/02-system-architecture.md)
 - [最小DB・ER設計案](docs/02-development/03-database-er-proposal.md)
 - [レポートAPIの使い方](docs/02-development/04-reports-api.md)

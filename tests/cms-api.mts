@@ -46,6 +46,7 @@ try {
     assert.deepEqual((await list.json()).data.map((item: { id: string }) => item.id), [draft.id]);
     assert.deepEqual((await (await api(adminPath)).json()).data.document, draft);
     assert.equal((await api(`/api/reports/${draft.id}`)).status, 404);
+    assert.ok(!(await (await fetch(base)).text()).includes(draft.id));
     const hiddenPage = await fetch(`${base}/reports/${draft.id}`);
     assert.ok([200, 404].includes(hiddenPage.status)); assert.ok(!(await hiddenPage.text()).includes(draft.contact));
     assert.equal((await api(adminPath, 'PATCH', { action: 'publish', confirmed: true, revision: record.revision })).status, 422);
@@ -63,12 +64,14 @@ try {
     assert.equal(publicDetail.status, 200); assert.equal(Object.keys((await publicDetail.json()).data).length, 22);
     assert.ok((await (await fetch(`${base}/reports/${draft.id}`)).text()).includes(complete.contact));
     assert.ok((await (await fetch(`${base}/reports`)).text()).includes(draft.id));
+    assert.ok((await (await fetch(base)).text()).includes(draft.id));
     assert.equal((await api(adminPath, 'PATCH', { action: 'save', document: complete, revision: record.revision })).status, 409);
     const unpublish = await api(adminPath, 'PATCH', { action: 'unpublish', revision: record.revision });
     assert.equal(unpublish.status, 200); record = (await unpublish.json()).data;
     assert.equal(record.published_at, null);
     assert.equal((await fetch(`${base}/api/reports/${draft.id}`)).status, 404);
     assert.ok(!(await (await fetch(`${base}/reports`)).text()).includes(draft.id));
+    assert.ok(!(await (await fetch(base)).text()).includes(draft.id));
     const concurrent = await Promise.all([api(adminPath, 'PATCH', { action: 'save', document: complete, revision: record.revision }), api(adminPath, 'PATCH', { action: 'save', document: complete, revision: record.revision })]);
     assert.deepEqual(concurrent.map(response => response.status).sort(), [200, 409]);
     // Legacy report retains its ID and URL when a document is supplied after unpublishing.
@@ -95,6 +98,14 @@ try {
         const page = await context.newPage();
         const browserErrors: string[] = [];
         page.on('pageerror', error => browserErrors.push(error.message));
+        await page.goto(base);
+        await page.getByRole('heading', { name: '最近評価したサイト', exact: true }).waitFor();
+        assert.equal(await page.locator('.hero').count(), 1);
+        const columns = await page.locator('.report-list > li').first().evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+        assert.equal(columns, 5, 'CMS styles must not replace the public report layout');
+        const integrationScreenshots = path.join(tmpdir(), 'a11y-portal-cms-check');
+        await mkdir(integrationScreenshots, { recursive: true });
+        await page.screenshot({ path: path.join(integrationScreenshots, 'integrated-home.png'), fullPage: true });
         await page.goto(`${base}/admin/login`);
         await page.getByLabel('メールアドレス').fill('admin@example.test');
         await page.getByLabel('パスワード', { exact: true }).fill('fixture-password');

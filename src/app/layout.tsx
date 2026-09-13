@@ -1,31 +1,20 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { Brand } from "@/components/portal";
 import "./globals.css";
+import "./cms.css";
 
 export const metadata: Metadata = {
-  title: "Webアクセシビリティ観測室",
-  description:
-    "Webサイトの操作で困る箇所と改善方法を共有し、修正と再確認につなげる評価ポータル。",
+  title: { default: "a11y Portal | 操作と改善の公開記録", template: "%s | a11y Portal" },
+  description: "操作のつまずき、確認した条件、改善のヒントをひとつに。Webサイトのアクセシビリティ評価を公開するポータル。",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="ja">
-      <body>
-        <a className="skip-link" href="#main-content">
-          本文へ移動
-        </a>
-        <header className="site-header">
-          <div className="container"><Link href="/">Webアクセシビリティ観測室</Link></div>
-        </header>
-        <main id="main-content" className="container" tabIndex={-1}>
-          {children}
-        </main>
-        <footer className="site-footer">
-          <div className="container footer-content"><span>Webアクセシビリティ評価ポータル</span><Link href="/admin">管理者ログイン</Link></div>
-        </footer>
-      </body>
-    </html>
-  );
+  return <html lang="ja"><body>
+    <a className="skip-link" href="#main-content">本文へ移動</a>
+    <header className="site-header"><div className="container header-inner"><Brand /><nav aria-label="メインナビゲーション"><Link href="/#recent-reports">評価レポート</Link><Link href="/#evaluation-method">評価の考え方</Link><Link href="/#corrections">補足・訂正</Link></nav></div></header>
+    <main id="main-content" tabIndex={-1}>{children}</main>
+    <footer className="site-footer"><div className="container footer-inner"><Brand /><p>よりよいWebを、ともにつくる。</p><Link href="/admin">管理者ログイン</Link></div></footer>
+  </body></html>;
 }
