@@ -53,5 +53,6 @@ docs/
 - [フェーズ別システム構成図](docs/02-development/02-system-architecture.md)
 - [最小DB・ER設計案](docs/02-development/03-database-er-proposal.md)
 - [レポートAPIの使い方](docs/02-development/04-reports-api.md)
+- [本番表示確認用のseedと適用・削除手順](docs/02-development/07-production-seed.md)
 
 `docs`配下のディレクトリ・ファイルには、`01-`のような2桁の番号を付けて順序を固定します。
