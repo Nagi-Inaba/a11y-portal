@@ -40,5 +40,6 @@ docs/
 
 - [プロジェクトコンセプト](docs/01-concepts/01-project-concept.md)
 - [セットアップ・Vercelへの公開手順](docs/02-development/01-setup.md)
+- [ブランチ戦略](docs/02-development/02-branch-strategy.md)
 
 `docs`配下のディレクトリ・ファイルには、`01-`のような2桁の番号を付けて順序を固定します。

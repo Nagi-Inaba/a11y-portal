@@ -1,0 +1,65 @@
+name: Preview
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+# developへ続けてpushした場合は、古いプレビューを打ち切る。
+concurrency:
+  group: preview-develop
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: Preview deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@59
+
+      # DBマイグレーションは適用しない。本番プロジェクトを共用しているため、
+      # 未確定のスキーマを本番へ入れないようにする。developの検証は
+      # ローカルの`supabase start`で行う。
+      - name: Deploy preview
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          url="$(vercel deploy --yes --token="$VERCEL_TOKEN")"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        run: |
+          {
+            echo "### プレビューデプロイ完了"
+            echo ""
+            echo "- プレビューURL: ${{ steps.deploy.outputs.url }}"
+          } >> "$GITHUB_STEP_SUMMARY"
