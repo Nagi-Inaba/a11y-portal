@@ -23,7 +23,7 @@ async function withApp(env, check) {
     let ready = false;
     for (let i = 0; i < 100; i++) {
       if (child.exitCode !== null) throw new Error(output);
-      try { await fetch(base); ready = true; break; } catch { await delay(100); }
+      try { await fetch(`${base}/api/reports?limit=0`); ready = true; break; } catch { await delay(100); }
     }
     assert.ok(ready, output);
     await check(base);
@@ -36,6 +36,16 @@ async function withApp(env, check) {
 
 let sample;
 await withApp({ REPORTS_DATA_SOURCE: 'sample' }, async base => {
+  const home = await fetch(base);
+  const homeHtml = await home.text();
+  assert.equal(home.status, 200);
+  assert.ok(homeHtml.includes('最近評価したサイト'));
+  assert.ok(homeHtml.includes('/reports/SAMPLE-001'));
+  const page = await fetch(`${base}/reports/SAMPLE-001`);
+  const pageHtml = await page.text();
+  assert.ok(pageHtml.includes('修正後の確認方法'));
+  assert.ok(pageHtml.includes('VoiceOver'));
+  assert.ok(!(await (await fetch(`${base}/reports/UNKNOWN`)).text()).includes('メニューから手続き案内へ進む'));
   const list = await fetch(`${base}/api/reports`);
   assert.equal(list.status, 200);
   assert.equal(list.headers.get('cache-control'), 'no-store');
