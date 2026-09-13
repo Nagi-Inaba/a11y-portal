@@ -1,0 +1,2 @@
+# Preserve the submitted source bytes and the SHA-256 recorded in the design brief.
+docs/01-concepts/04-design-samples/05-visual-design-brief.v2.0.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

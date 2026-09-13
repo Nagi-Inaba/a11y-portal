@@ -39,6 +39,8 @@ docs/
 ```
 
 - [プロジェクトコンセプト](docs/01-concepts/01-project-concept.md)
+- [UI設計ガイド（草案）](docs/01-concepts/05-ui-design-guidelines.md)
+- [フロント設計ブリーフ v2.1（JSON）](docs/01-concepts/06-frontend-design-brief.v2.1.json)
 - [セットアップ・Vercelへの公開手順](docs/02-development/01-setup.md)
 - [ブランチ戦略](docs/02-development/02-branch-strategy.md)
 
