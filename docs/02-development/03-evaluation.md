@@ -85,5 +85,6 @@ npm test
 
 ## 7. 関連資料
 
+- [iOS SimulatorのVoiceOverをCLIで検証する](05-ios-simulator-voiceover-cli.md)
 - [プロジェクトコンセプト](../01-concepts/01-project-concept.md)
 - [ブランチ戦略](02-branch-strategy.md)

@@ -49,6 +49,7 @@ docs/
 - [セットアップ・Vercelへの公開手順](docs/02-development/01-setup.md)
 - [ブランチ戦略](docs/02-development/02-branch-strategy.md)
 - [評価の仕組み](docs/02-development/03-evaluation.md)
+- [iOS SimulatorのVoiceOverをCLIで検証する](docs/02-development/05-ios-simulator-voiceover-cli.md)
 - [フェーズ別システム構成図](docs/02-development/02-system-architecture.md)
 - [最小DB・ER設計案](docs/02-development/03-database-er-proposal.md)
 - [レポートAPIの使い方](docs/02-development/04-reports-api.md)
