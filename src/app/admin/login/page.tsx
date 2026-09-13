@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LoginForm } from "../ui";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ reason?: string }> }) {
@@ -6,5 +7,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return <div className="login-panel"><p className="eyebrow">レポート管理</p><h1>管理者ログイン</h1>
     <p>管理者アカウントでログインして、下書きの確認と公開を行います。</p>
     {message && <p className="notice">{message}</p>}<LoginForm />
+    <p><Link href="/admin/example">ログインせずに管理画面の表示例を見る</Link></p>
   </div>;
 }
