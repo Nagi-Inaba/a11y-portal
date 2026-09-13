@@ -1,0 +1,50 @@
+.cms-surface { --accent: var(--brand); --foreground: var(--text); --border: var(--line); padding-block: 2rem; }
+.cms-surface h1, .cms-surface h2, .cms-surface h3, .cms-surface p { margin-bottom: 1rem; }
+.cms-surface :focus-visible { outline: 3px solid #000; outline-offset: 3px; box-shadow: 0 0 0 6px #ffd43d; }
+.cms-surface a { color: #005a80; text-underline-offset: 0.2em; }
+.cms-surface a:hover { text-decoration-thickness: 0.15em; }
+.cms-surface button, .cms-surface input, .cms-surface textarea, .cms-surface select { font: inherit; }
+.cms-surface button, .cms-surface .tabs a { min-height: 3rem; padding: 0.6rem 1.2rem; border-radius: 0.35rem; }
+.cms-surface button { border: 2px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; font-weight: 700; }
+.cms-surface button:hover:not(:disabled) { background: #004c40; border-color: #004c40; }
+.cms-surface button.secondary { color: var(--foreground); background: #fff; border-color: #637780; }
+.cms-surface button.secondary:hover:not(:disabled) { background: #e7edf1; }
+.cms-surface button:disabled { opacity: 0.6; cursor: not-allowed; }
+.cms-surface input:not([type="checkbox"]), .cms-surface textarea, .cms-surface select { display: block; width: 100%; margin-top: 0.4rem; padding: 0.65rem; border: 1px solid #637780; border-radius: 0.25rem; color: var(--foreground); background: #fff; }
+.cms-surface textarea { resize: vertical; }
+.cms-surface label { display: block; font-weight: 600; }
+.cms-surface fieldset { min-width: 0; margin: 0; border: 1px solid #637780; padding: 1rem; }
+.cms-surface legend { padding-inline: 0.4rem; font-weight: 700; }
+.cms-surface .form-stack { display: grid; gap: 1.25rem; }
+.cms-surface .form-stack > button { justify-self: start; }
+.cms-surface .form-stack p { margin-block: 0; }
+.cms-surface .panel { margin-block: 1.5rem; padding: clamp(1rem, 4vw, 2rem); border: 1px solid var(--border); border-radius: 0.5rem; background: #fff; }
+.cms-surface .panel > :last-child { margin-bottom: 0; }
+.cms-surface .login-panel { max-width: 34rem; margin-inline: auto; }
+.cms-surface .eyebrow { margin: 0 0 0.5rem; color: #435c6a; font-weight: 700; }
+.cms-surface .muted { color: #435c6a; }
+.cms-surface .admin-nav, .cms-surface .actions, .cms-surface .footer-content, .cms-surface .tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.cms-surface .admin-nav { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.cms-surface .admin-nav button { margin-left: auto; }
+.cms-surface .footer-content { justify-content: space-between; }
+.cms-surface .tabs { margin-block: 2rem; border-bottom: 1px solid #637780; padding-bottom: 0.5rem; }
+.cms-surface .tabs a[aria-current="page"] { color: #fff; background: var(--accent); font-weight: 700; }
+.cms-surface .badge { display: inline-block; margin: 0; padding: 0.15rem 0.6rem; border: 1px solid #637780; border-radius: 0.25rem; font-weight: 600; }
+.cms-surface .notice { padding: 1rem; border-left: 4px solid #005a80; background: #edf5fa; }
+.cms-surface .notice.error { border-color: #a12622; background: #fff1ef; }
+.cms-surface .check-label { display: flex; align-items: baseline; gap: 0.75rem; margin-block: 1rem; }
+.cms-surface .check-label input { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; }
+.cms-surface summary { cursor: pointer; font-weight: 700; padding-block: 0.5rem; }
+.cms-surface .cms-report-list { padding: 0; list-style: none; }
+.cms-surface .cms-report-list > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.25rem; }
+.cms-surface .cms-report-list h2, .cms-surface .cms-report-list h3 { margin-block: 0.5rem; }
+.cms-surface .cms-report-list p { margin-block: 0.5rem; }
+.cms-surface .report-document dd { margin: 0.25rem 0 1rem; white-space: pre-wrap; }
+.cms-surface dt { font-weight: 700; }
+.cms-surface .task-section + .task-section, .cms-surface .finding-list > li + li { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.cms-surface .finding-list { padding-left: 1.5rem; }
+.cms-surface .preview-heading { margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #637780; }
+@media (max-width: 40rem) {
+  .cms-surface .cms-report-list > li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .cms-surface .admin-nav button { margin-left: 0; }
+}

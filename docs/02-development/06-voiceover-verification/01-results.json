@@ -1,0 +1,317 @@
+{
+  "verifiedAt": "2026-09-13T15:47:00+09:00",
+  "environment": {
+    "macOS": "26.5.1 (25F80)",
+    "Xcode": "26.6 (17F113)",
+    "iOS": "26.5 (23F77)",
+    "device": "iPhone 17",
+    "udid": "AAB523FB-209C-493E-B6B8-40E0C43D274D",
+    "axe": "1.8.0",
+    "macOSVoiceOver": "not running"
+  },
+  "scope": "Independent reproduction of the central observations in commit 9111f9a, section 8; not a repeat of every attempted workaround.",
+  "timestampNote": "Actions use UTC ISO 8601. System logs use JST. Page serverTime is Unix time.",
+  "actions": [
+    {
+      "action": "next",
+      "time": "2026-09-13T06:47:58.232128+00:00",
+      "speech": "Test activation"
+    },
+    {
+      "action": "VO+Space",
+      "start": "2026-09-13T06:47:58.397219+00:00",
+      "end": "2026-09-13T06:48:00.081072+00:00"
+    },
+    {
+      "action": "next",
+      "time": "2026-09-13T06:48:02.116559+00:00",
+      "speech": "Count 0"
+    },
+    {
+      "action": "next",
+      "time": "2026-09-13T06:48:40.779955+00:00",
+      "speech": "Test link"
+    },
+    {
+      "action": "link-VO+Space",
+      "start": "2026-09-13T06:48:40.780880+00:00",
+      "end": "2026-09-13T06:48:42.170951+00:00",
+      "events": []
+    },
+    {
+      "action": "plain-Return",
+      "start": "2026-09-13T06:48:42.171667+00:00",
+      "end": "2026-09-13T06:48:43.589793+00:00",
+      "events": [
+        {
+          "session": "independent-265",
+          "type": "click",
+          "target": "test",
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "meta": false,
+          "trusted": true,
+          "detail": 0,
+          "active": "test",
+          "count": 0,
+          "time": 90014,
+          "serverTime": 1789282122.3923242
+        },
+        {
+          "session": "independent-265",
+          "type": "activated",
+          "target": "test",
+          "active": "test",
+          "count": 1,
+          "time": 90015,
+          "serverTime": 1789282122.3937988
+        }
+      ]
+    },
+    {
+      "action": "physical-single-tap-button",
+      "start": "2026-09-13T06:48:43.590278+00:00",
+      "end": "2026-09-13T06:48:45.284202+00:00",
+      "events": [
+        {
+          "session": "independent-265",
+          "type": "click",
+          "target": "test",
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "meta": false,
+          "trusted": true,
+          "detail": 1,
+          "active": "",
+          "count": 1,
+          "time": 91684,
+          "serverTime": 1789282124.067768
+        },
+        {
+          "session": "independent-265",
+          "type": "activated",
+          "target": "test",
+          "active": "",
+          "count": 2,
+          "time": 91684,
+          "serverTime": 1789282124.068515
+        }
+      ]
+    },
+    {
+      "action": "simulator-single-tap-button",
+      "start": "2026-09-13T06:48:45.284664+00:00",
+      "end": "2026-09-13T06:48:46.854938+00:00",
+      "events": [
+        {
+          "session": "independent-265",
+          "type": "click",
+          "target": "test",
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "meta": false,
+          "trusted": true,
+          "detail": 1,
+          "active": "",
+          "count": 2,
+          "time": 93271,
+          "serverTime": 1789282125.65985
+        },
+        {
+          "session": "independent-265",
+          "type": "activated",
+          "target": "test",
+          "active": "",
+          "count": 3,
+          "time": 93272,
+          "serverTime": 1789282125.6613271
+        }
+      ]
+    },
+    {
+      "action": "native-VO+Space",
+      "speech": "Activation Probe Standard",
+      "start": "2026-09-13T06:49:20.873781+00:00",
+      "end": "2026-09-13T06:49:22.150187+00:00",
+      "nativeEvents": []
+    },
+    {
+      "action": "next",
+      "time": "2026-09-13T06:49:24.162984+00:00",
+      "speech": "Custom activate"
+    },
+    {
+      "action": "native-VO+Space",
+      "speech": "Custom activateがクリップボードにコピーされました",
+      "start": "2026-09-13T06:49:24.981841+00:00",
+      "end": "2026-09-13T06:49:26.155685+00:00",
+      "nativeEvents": []
+    },
+    {
+      "action": "next",
+      "time": "2026-09-13T06:49:27.995675+00:00",
+      "speech": "Count 0"
+    },
+    {
+      "action": "native-physical-single-tap-custom",
+      "start": "2026-09-13T06:50:10.308219+00:00",
+      "end": "2026-09-13T06:50:11.477186+00:00",
+      "nativeEvents": [
+        "clicked Custom activate button count=1 VO=1"
+      ]
+    }
+  ],
+  "pageEvents": [
+    {
+      "session": "independent-265",
+      "type": "loaded",
+      "target": "BODY",
+      "active": "",
+      "count": 0,
+      "time": 82,
+      "serverTime": 1789282032.470052
+    },
+    {
+      "session": "independent-265",
+      "type": "focusin",
+      "target": "test",
+      "trusted": true,
+      "detail": 0,
+      "active": "test",
+      "count": 0,
+      "time": 44265,
+      "serverTime": 1789282076.6438148
+    },
+    {
+      "session": "independent-265",
+      "type": "click",
+      "target": "test",
+      "ctrl": false,
+      "alt": false,
+      "shift": false,
+      "meta": false,
+      "trusted": true,
+      "detail": 0,
+      "active": "test",
+      "count": 0,
+      "time": 90014,
+      "serverTime": 1789282122.3923242
+    },
+    {
+      "session": "independent-265",
+      "type": "activated",
+      "target": "test",
+      "active": "test",
+      "count": 1,
+      "time": 90015,
+      "serverTime": 1789282122.3937988
+    },
+    {
+      "session": "independent-265",
+      "type": "focusout",
+      "target": "test",
+      "trusted": true,
+      "detail": 0,
+      "active": "",
+      "count": 1,
+      "time": 91684,
+      "serverTime": 1789282124.066723
+    },
+    {
+      "session": "independent-265",
+      "type": "click",
+      "target": "test",
+      "ctrl": false,
+      "alt": false,
+      "shift": false,
+      "meta": false,
+      "trusted": true,
+      "detail": 1,
+      "active": "",
+      "count": 1,
+      "time": 91684,
+      "serverTime": 1789282124.067768
+    },
+    {
+      "session": "independent-265",
+      "type": "activated",
+      "target": "test",
+      "active": "",
+      "count": 2,
+      "time": 91684,
+      "serverTime": 1789282124.068515
+    },
+    {
+      "session": "independent-265",
+      "type": "click",
+      "target": "test",
+      "ctrl": false,
+      "alt": false,
+      "shift": false,
+      "meta": false,
+      "trusted": true,
+      "detail": 1,
+      "active": "",
+      "count": 2,
+      "time": 93271,
+      "serverTime": 1789282125.65985
+    },
+    {
+      "session": "independent-265",
+      "type": "activated",
+      "target": "test",
+      "active": "",
+      "count": 3,
+      "time": 93272,
+      "serverTime": 1789282125.6613271
+    }
+  ],
+  "systemLogExcerpts": [
+    "2026-09-13 15:47:56.614 Db vot[44624:af75cb0] [com.apple.Accessibility:VOTElement] Hit test point is {198, 118} with window context id 2262020082 and original center point {198, 118}",
+    "2026-09-13 15:47:58.562 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a72a0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd85a0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:47:58.562 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:47:58.562 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a72a0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd85a0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:47:58.564 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a64e0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd85a0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:47:58.564 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:47:58.564 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a64e0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd85a0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:47:58.564 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] Key State: 1, Character(s):  [0], Command: VOTEventCommandSimpleTap, Single Letter State: 0",
+    "2026-09-13 15:47:58.565 I  backboardd[28468:af69ca4] [com.apple.Accessibility:AXCommon] Simulating press: {\n    delay = \"0.05\";\n    force = 0;\n    point = \"NSPoint: {0, 0}\";\n    secureName = 0;\n    windowContextID = 0;\n}",
+    "2026-09-13 15:48:00.429 Db vot[44624:af75cb0] [com.apple.Accessibility:VOTElement] Hit test point is {79, 196} with window context id 2262020082 and original center point {79, 196}",
+    "2026-09-13 15:48:39.123 Db vot[44624:af75cb0] [com.apple.Accessibility:VOTElement] Hit test point is {63, 254} with window context id 2262020082 and original center point {63, 254}",
+    "2026-09-13 15:48:40.946 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a6340>: keys:[␣]' resolver: VOSCommandResolver<0x105f776c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:48:40.946 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:48:40.946 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a6340>: keys:[␣]' resolver: VOSCommandResolver<0x105f776c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:48:40.948 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a7ca0>: keys:[␣]' resolver: VOSCommandResolver<0x105f776c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:48:40.948 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:48:40.948 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x1046a7ca0>: keys:[␣]' resolver: VOSCommandResolver<0x105f776c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:48:40.948 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] Key State: 1, Character(s):  [0], Command: VOTEventCommandSimpleTap, Single Letter State: 0",
+    "2026-09-13 15:48:40.948 I  backboardd[28468:af69ca4] [com.apple.Accessibility:AXCommon] Simulating press: {\n    delay = \"0.05\";\n    force = 0;\n    point = \"NSPoint: {0, 0}\";\n    secureName = 0;\n    windowContextID = 0;\n}",
+    "2026-09-13 15:49:21.118 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c895c0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd9e00> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:21.118 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:49:21.119 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c895c0>: keys:[␣]' resolver: VOSCommandResolver<0x105fd9e00> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:21.122 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8ad80>: keys:[␣]' resolver: VOSCommandResolver<0x105fd9e00> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:21.122 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:49:21.122 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8ad80>: keys:[␣]' resolver: VOSCommandResolver<0x105fd9e00> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:21.122 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] Key State: 1, Character(s):  [0], Command: VOTEventCommandSimpleTap, Single Letter State: 0",
+    "2026-09-13 15:49:21.122 I  backboardd[28468:af69ca4] [com.apple.Accessibility:AXCommon] Simulating press: {\n    delay = \"0.05\";\n    force = 0;\n    point = \"NSPoint: {0, 0}\";\n    secureName = 0;\n    windowContextID = 0;\n}",
+    "2026-09-13 15:49:22.481 Db vot[44624:af75cb0] [com.apple.Accessibility:VOTElement] Hit test point is {195, 185} with window context id 3876176808 and original center point {195, 185}",
+    "2026-09-13 15:49:25.129 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8d0e0>: keys:[␣]' resolver: VOSCommandResolver<0x1074b12c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:25.130 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:49:25.130 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8d0e0>: keys:[␣]' resolver: VOSCommandResolver<0x1074b12c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:25.131 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8df80>: keys:[␣]' resolver: VOSCommandResolver<0x1074b12c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:25.131 I  vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] ✅ returning customized vosCommand: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for characters ' ' Fn-pressed? NO",
+    "2026-09-13 15:49:25.131 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTCommon] Resolved command: 'VOSCommand<0x1017dbba0>: Built-in: アクティベート' for keyChord: 'AXSSKeyChord<0x105c8df80>: keys:[␣]' resolver: VOSCommandResolver<0x1074b12c0> Host:0 SCRMode:VOSScreenreaderMode<0x101718ba0>: Default ApplyRTL:0 BSI:0 pressCount:1",
+    "2026-09-13 15:49:25.131 Db vot[44624:af75cbd] [com.apple.Accessibility:VOTKeyboard] Key State: 1, Character(s):  [0], Command: VOTEventCommandSimpleTap, Single Letter State: 0",
+    "2026-09-13 15:49:25.131 I  backboardd[28468:af69ca4] [com.apple.Accessibility:AXCommon] Simulating press: {\n    delay = \"0.05\";\n    force = 0;\n    point = \"NSPoint: {0, 0}\";\n    secureName = 0;\n    windowContextID = 0;\n}",
+    "2026-09-13 15:49:26.320 Db vot[44624:af75cb0] [com.apple.Accessibility:VOTElement] Hit test point is {195.16666666666666, 285} with window context id 3876176808 and original center point {195.16666666666669, 285}"
+  ],
+  "nativeProbeNote": "Standard UIButton plus a subclass overriding accessibilityActivate to log receipt and send touchUpInside. Neither VO+Space test produced callback records; a later physical tap produced clicked Custom activate button count=1 VO=1.",
+  "limitations": [
+    "Raw system log excerpts show zero coordinates and windowContextID; they do not identify which internal component lost them.",
+    "No independent retest here of reboot, right modifiers, Quick Nav, double tap, macOS mouse input, or Xcode 27 XCUIVoiceOverService.",
+    "Copying speech repeatedly can return the clipboard-copy notification; the preceding navigation result is retained."
+  ]
+}

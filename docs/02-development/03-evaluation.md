@@ -1,6 +1,6 @@
 # 評価の仕組み
 
-URLを指定して自動検査を実行し、評価レポートの下書きを作ります。DBへの登録は含みません。
+URLを指定して自動検査を実行し、評価レポートの下書きを作ります。出力されたJSONは[管理者CMS](05-report-cms.md)でDBへ取り込み、操作確認の結果を追記して公開できます。
 
 ## 1. 実行
 
@@ -80,10 +80,10 @@ npm test
 
 - 複数ページの巡回
 - 人による操作確認の結果を追記するコマンド
-- DBへの登録（担当者が別途実装）
 - AIによる操作結果との比較
 
 ## 7. 関連資料
 
+- [iOS SimulatorのVoiceOverをCLIで検証する](05-ios-simulator-voiceover-cli.md)
 - [プロジェクトコンセプト](../01-concepts/01-project-concept.md)
 - [ブランチ戦略](02-branch-strategy.md)

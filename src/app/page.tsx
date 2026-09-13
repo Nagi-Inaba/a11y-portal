@@ -31,6 +31,7 @@ export default async function HomePage() {
           <div className="report-date"><ReportDate report={report} /></div><Score report={report} />
         </li>)}</ul>}
         <p className="score-note">点数の採点方法は検討中です。対象ページの評価であり、サイト全体の適合を保証するものではありません。</p>
+        <p><Link className="text-link" href="/reports">すべての公開レポートを見る<ArrowRightIcon size={20} aria-hidden="true" /></Link></p>
       </section>
       <section id="evaluation-method" aria-labelledby="method-heading" className="method-section"><SectionHeading id="method-heading">評価の考え方</SectionHeading><p className="section-intro">点数だけでなく、確認した操作・環境・改善案を記録します。</p><div className="principles">{principles.map(({ Icon, title, body }) => <div className="principle" key={title}><span className="icon-disc"><Icon weight="light" aria-hidden="true" /></span><div><h3>{title}</h3><p>{body}</p></div></div>)}</div></section>
       <Corrections />
