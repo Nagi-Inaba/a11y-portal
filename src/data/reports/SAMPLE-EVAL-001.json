@@ -1,0 +1,75 @@
+{
+  "id": "SAMPLE-EVAL-001",
+  "siteName": "【架空評価】申請フォーム：操作を完了できない",
+  "targetUrl": "https://evaluation.example/application",
+  "scope": "評価スコア（ダミー）：45 / 100点。表示確認用の任意の値であり、検査結果から算出した点数ではありません。画面表示確認用の架空評価。対象1ページ・1操作のみ。すべての検査・操作結果はダミーです。",
+  "checkedAt": "2026-09-13T00:00:00+09:00",
+  "source": "sample",
+  "environment": {
+    "os": "macOS（想定環境）",
+    "browser": "Safari（操作確認の想定）／Chromium（自動検査の想定）",
+    "assistiveTech": "VoiceOver（想定環境）"
+  },
+  "automatedScan": {
+    "tool": "axe-core（ダミー結果）",
+    "toolVersion": "架空版",
+    "scannedAt": "2026-09-13T00:00:00+09:00",
+    "coverageNote": "実際の検査は実施していません。表示日時もダミーです。自動検査で検出0件でも、操作の完了やサイト全体の適合を保証しません。",
+    "findings": [
+      {
+        "id": "auto-label",
+        "summary": "【架空】申請フォームの氏名欄に名前がない",
+        "affectedUsers": "読み上げで入力欄を識別する利用者が、何を入力するか判断できない想定です。",
+        "method": "automated",
+        "tool": "axe-core（ダミー結果）",
+        "relatedCriteria": [],
+        "remediation": "氏名欄と可視ラベルを関連付ける。",
+        "reverification": "修正後に自動検査し、読み上げでも「氏名」と伝わることを確認する。"
+      }
+    ],
+    "needsReview": [
+      {
+        "id": "review-order",
+        "summary": "【架空】説明文と入力欄の読み上げ順序は人による判断が必要",
+        "affectedUsers": "読み上げ順序によって入力条件を見落とす可能性があります。",
+        "method": "automated",
+        "tool": "axe-core（ダミー結果）",
+        "relatedCriteria": [],
+        "remediation": "説明文を入力欄の前に置き、必要な説明を関連付ける。",
+        "reverification": "見た目と読み上げの順序を比較し、条件を把握して入力できるか確認する。"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "task-1",
+      "goal": "申請フォームを入力して送信する",
+      "steps": [
+        "申請ページを開く。",
+        "申請開始ボタンを押す。",
+        "Tabキーで氏名欄から次の項目へ移動する。"
+      ],
+      "expected": "入力欄を識別し、すべての必須項目を入力して送信できる。",
+      "actual": "【架空の結果】氏名欄の名前が伝わらず、モーダル内でフォーカスが同じ項目を循環したため送信まで進めなかった。",
+      "outcome": "blocked",
+      "findings": [
+        {
+          "id": "manual-focus",
+          "summary": "【架空】モーダル内から次の入力欄へ移動できない",
+          "affectedUsers": "キーボードで操作する利用者が申請を続けられない想定です。",
+          "method": "manual",
+          "tool": "キーボード・VoiceOver（架空の操作確認）",
+          "relatedCriteria": [],
+          "remediation": "モーダル内のフォーカス順序と閉じる操作を整える。",
+          "reverification": "Tab・Shift+Tabで全項目へ移動し、Escapeで閉じて元のボタンへ戻れることを確認する。"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "全内容が架空であり、実測結果ではありません。",
+    "他ページ・スマートフォン・他の支援技術は評価対象外です。",
+    "関連する達成基準の個別評価とサイト全体の適合判定は行っていません。"
+  ],
+  "contact": "ダミーデータのため実在の連絡先はありません。"
+}
