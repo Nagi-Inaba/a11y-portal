@@ -10,6 +10,8 @@
     "build": "next build",
     "start": "next start",
     "test:api": "node tests/reports-api.mjs",
+    "test:cms": "node --experimental-strip-types tests/cms-api.mts",
+    "test:db": "node --experimental-strip-types tests/cms-db.mts",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@electric-sql/pglite": "0.5.8",
     "@types/node": "^22.20.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
