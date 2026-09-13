@@ -45,7 +45,7 @@ export function MethodStatuses({ report, compact = false }: { report: Report; co
 }
 
 export function Corrections({ compact = false }: { compact?: boolean }) {
-  return <section id={compact ? undefined : "corrections"} className={compact ? "" : "corrections-section"} aria-label="補足・訂正"><h2>{compact ? "補足・訂正" : "補足・訂正について"}</h2><p>確認結果への補足や訂正を、次の改善につなげます。</p><CorrectionContact /></section>;
+  return <section id={compact ? undefined : "corrections"} className={compact ? "" : "corrections-section"} aria-label="補足・訂正"><h2>{compact ? "補足・訂正" : "補足・訂正について"}</h2><p>確認結果への補足や訂正を、次の改善につなげます。</p><p><Link href="/contribute">ログインして評価・訂正を投稿する</Link></p><CorrectionContact /></section>;
 }
 
 export function DataUnavailable() {

@@ -8,6 +8,7 @@ import { getPublishedDocument, getReport } from "@/lib/reports/repository";
 import { parseCmsDocument } from "@/lib/cms/document";
 import { ReportDocument } from "@/components/report-document";
 import { CorrectionContact } from "@/components/correction-contact";
+import { ReportWorkflowLinks } from "@/components/report-workflow-links";
 import { formatDate, isExampleUrl, statusLabel } from "@/lib/reports/presentation";
 
 export const dynamic = "force-dynamic";
@@ -35,7 +36,7 @@ export default async function ReportPage({ params }: Props) {
   const document = await getPublishedDocument(id);
   if (document) return <div className="container detail-page">
     <div className="detail-navigation"><Link className="text-link" href="/reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
-    <h1>{report.title}</h1><MethodStatuses report={report} /><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
+    <h1>{report.title}</h1><ReportWorkflowLinks id={report.id} /><MethodStatuses report={report} /><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
   </div>;
   const sample = report.is_sample;
   const env = report.environment;
@@ -44,6 +45,7 @@ export default async function ReportPage({ params }: Props) {
   return <div className="container detail-page">
     <div className="detail-navigation"><nav aria-label="パンくず"><ol><li><Link href="/#recent-reports">評価レポート</Link></li><li aria-current="page">{report.id}</li></ol></nav><Link className="text-link" href="/#recent-reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
     {sample && <SampleNotice detail />}
+    <ReportWorkflowLinks id={report.id} />
     <header className="report-header"><ReportThumbnail report={report} /><div className="report-header-copy"><p className="report-site-name">{report.title}</p><h1>{report.operation_summary}</h1><dl className="report-facts"><div><dt>対象ページ</dt><dd>{report.target_page_name}</dd></div><div><dt>対象範囲</dt><dd>{report.scope_summary}{sample && "（想定）"}</dd></div><div><dt>確認日</dt><dd>{formatDate(report.checked_on)}</dd></div></dl><div className="header-score"><Score report={report} /><p className="muted">採点方法は検討中です。<br />{sample ? "点数は画面設計用の表示例です。" : "サイト全体の適合を示すものではありません。"}</p></div></div></header>
     <MethodStatuses report={report} />
     <a className="text-link improvement-jump" href="#improvement">改善のヒントへ<ArrowRightIcon aria-hidden="true" /></a>

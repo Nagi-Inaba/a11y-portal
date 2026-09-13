@@ -11,6 +11,8 @@
     "start": "next start",
     "test:api": "node tests/reports-api.mjs",
     "test:ui": "node tests/portal-ui.mjs",
+    "test:submissions": "node --experimental-strip-types tests/submissions.mts",
+    "test:submissions:ui": "node tests/submissions-ui.mjs",
     "test:cms": "node --experimental-strip-types tests/cms-api.mts",
     "test:db": "node --experimental-strip-types tests/cms-db.mts",
     "lint": "eslint . --max-warnings=0",
