@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
 
-# 本番デプロイの多重実行を防ぐ。実行中のものは中断せず順番に流す。
+# 本番への反映が重ならないようにする。実行中のものは中断せず順番に流す。
 concurrency:
   group: deploy-production
   cancel-in-progress: false
@@ -15,8 +15,31 @@ permissions:
   contents: read
 
 jobs:
+  # DBスキーマを先に反映してからアプリを配信する。
+  migrate:
+    name: Apply migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v3
+        with:
+          version: latest
+
+      - name: Apply migrations
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          supabase link --project-ref "${{ secrets.SUPABASE_PROJECT_REF }}"
+          supabase db push
+
   deploy:
     name: Production deploy
+    needs: migrate
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -45,8 +68,6 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@59
 
-      # Hobbyプランでは`vercel build`＋`--prebuilt`のデプロイがBLOCKEDになるため、
-      # ソースをアップロードしてVercel側でビルドする。
       - name: Deploy to production
         id: deploy
         env:
