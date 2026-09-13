@@ -83,28 +83,33 @@ Next.jsの標準構成をそのまま使うため、独自の`vercel.json`は不
 vercel env pull
 ```
 
-### 4.4 手動デプロイ
+### 4.4 自動デプロイ（GitHub Actions）
 
-現在はGitHub連携が未設定のため、CLIから直接デプロイします。
+`main`へのpushで`.github/workflows/deploy.yml`が動き、本番へデプロイします。Actionsの画面から手動実行（workflow_dispatch）もできます。
+
+処理順は`npm ci` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`です。lintか型検査で失敗した場合はデプロイしません。
+
+Vercel GitHub Appは使いません。Appのインストールにはリポジトリ所有者の承認が必要ですが、この方式はWrite権限だけで完結するためです。
+
+必要なリポジトリシークレットは次の3つです。
+
+| シークレット | 用途 |
+| --- | --- |
+| `VERCEL_TOKEN` | Vercelの[Account Tokens](https://vercel.com/account/settings/tokens)で発行したトークン |
+| `VERCEL_ORG_ID` | Vercelスコープのid。`.vercel/project.json`の`orgId` |
+| `VERCEL_PROJECT_ID` | Vercelプロジェクトのid。`.vercel/project.json`の`projectId` |
+
+`.vercel/project.json`は`vercel link`で生成され、Gitの管理対象外です。
+
+Hobbyプランでは`vercel build`と`vercel deploy --prebuilt`を組み合わせたデプロイが`BLOCKED`になります。そのため事前ビルドはせず、ソースをアップロードしてVercel側でビルドしています。
+
+### 4.5 手動デプロイ
+
+ローカルから直接デプロイする場合は、リポジトリのルートで次を実行します。
 
 ```sh
 vercel deploy --prod
 ```
-
-### 4.5 GitHub連携（未完了）
-
-`main`へのpushで自動デプロイするには、次の2つが必要です。どちらも本リポジトリ外の操作です。
-
-1. VercelアカウントのGitHub接続をやり直す。現在は接続が失効しており、Vercel経由のGitHub APIが`401 Bad credentials`を返します。<https://vercel.com/account/login-connections>から再接続します。
-2. リポジトリ`Nagi-Inaba/a11y-portal`へVercel GitHub Appをインストールする。インストールにはリポジトリ所有者`Nagi-Inaba`の承認が必要です（`seiichi3141`はWrite権限のみでAdminではありません）。
-
-両方が済んだあと、リポジトリのルートで次を実行して連携します。
-
-```sh
-vercel git connect
-```
-
-所有者の承認が得られない場合は、`seiichi3141`配下へリポジトリを作成して接続先を移す方法もあります。
 
 ## 5. 開発時の確認
 
