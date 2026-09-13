@@ -9,8 +9,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test:api": "node tests/reports-api.mjs",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
+    "evaluate": "node --experimental-strip-types scripts/evaluate.mts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.116.0",
@@ -20,11 +23,14 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@types/node": "^22.20.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.13.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.3.5",
+    "playwright": "^1.63.0",
     "typescript": "~5.9.3"
   }
 }

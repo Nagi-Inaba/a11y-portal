@@ -1,0 +1,477 @@
+{
+  "document_type": "frontend_visual_design_brief",
+  "version": "2.1",
+  "status": "design_proposal",
+  "updated_on": "2026-09-13",
+  "language": "ja-JP",
+  "project": {
+    "id": "a11y-portal",
+    "service_name": "a11y Portal",
+    "purpose": "Webサイトのアクセシビリティ評価を公開し、操作上の困りごと・改善案・再確認につなげる。",
+    "audiences": [
+      "Webサイトの制作者・開発者",
+      "Webサイトの運営者",
+      "障害のある利用者・評価協力者",
+      "共同開発に参加するメンバー"
+    ],
+    "experience": ["評価を見つける", "困りごとを理解する", "直す", "確かめる"]
+  },
+  "source_policy": {
+    "path_base": "このJSONファイルのあるディレクトリ",
+    "concept_file": "01-project-concept.md",
+    "original_brief_file": "04-design-samples/05-visual-design-brief.v2.0.json",
+    "original_brief_sha256": "e318385704db9c88f1bbf7b84fb072f1e947efb27823b68dad35c3df070214f3",
+    "implementation_guide_file": "05-ui-design-guidelines.md",
+    "supporting_files": [
+      "02-web-accessibility-portal.pdf",
+      "03-f-team-workshop-plan.pdf"
+    ],
+    "reference_images": {
+      "home_desktop": "04-design-samples/04-desktop-home.png",
+      "home_mobile": "04-design-samples/02-mobile-home.png",
+      "report_desktop": "04-design-samples/01-desktop-report-detail.png",
+      "report_mobile": "04-design-samples/03-mobile-report-detail.png"
+    },
+    "image_usage": "4枚は雰囲気と構図の参考。旧名称・旧シンボル、実在しそうなURL、古い日付、過大な評価文、点数の欠落を転記しない。文言・データは本JSON、シンボルはbrand.selected_iconを使う。",
+    "latest_user_requirements": [
+      "サイト名をa11y Portalにする",
+      "トップページに最近評価したサイトの一覧を置く",
+      "一覧に点数を表示する",
+      "青とチャコールのアーチ状アイコンを採用する（2026-09-13のユーザー指定）"
+    ],
+    "design_draft_overrides": [
+      "旧サービス仮称を画面に表示すること",
+      "トップ画面の表示例を1件に固定すること",
+      "点数表示を一律に禁止すること"
+    ],
+    "proposal_boundary": "サービス名・最近の評価一覧・点数表示は、提出されたv2.0から引き継ぐ設計方針。アイコンは2026-09-13のユーザー指定により採用。採点方法、100点満点、サンプルは実測仕様として確定していない。元のコンセプト文書や評価データをこの草案で書き換えたものとは扱わない。"
+  },
+  "brand": {
+    "wordmark": "a11y Portal",
+    "spelling_rule": "aは小文字、11は数字、yは小文字、半角スペースの後にPortal。ヘッダーとフッターで統一する。",
+    "current_symbol": "青い帯と濃いチャコール、中央の白い抜きを持つアーチ状のシンボル。白い角丸の背景と影を含むユーザー提供画像を採用する。",
+    "new_icon_status": "2026-09-13にユーザーが採用を指定。旧シンボルと3案検討中の指定を更新する。",
+    "selected_icon": {
+      "file": "04-design-samples/06-adopted-icon.png",
+      "comparison_label": "03 チャコール × スカイブルー",
+      "decision": "adopted_by_user",
+      "selected_on": "2026-09-13",
+      "format": "PNG",
+      "width_px": 1254,
+      "height_px": 1254,
+      "size_bytes": 1608539,
+      "has_transparency": false,
+      "sha256": "a7d7e533e9cd698eb03e60d444b80a5ae7d8f450e109c58f726d8a28573a09c1",
+      "source_handling": "添付画像の原本を加工せず保存。小サイズ用や背景透過・フラット版を作る場合は別ファイルにする。"
+    },
+    "future_logo_rule": "Webヘッダーとfavicon用の派生版は、採用画像のアーチ状の輪郭と中央の抜きを保つ。現ファイルは白い背景を含む原画像であり、小サイズ用のフラット版は今後の制作対象。",
+    "implementation_fallback": "ヘッダーではa11y Portalの文字と組み合わせる。同じ名称を隣のテキストで伝える場合、シンボル画像のaltは空にする。アイコンだけがホームへのリンクになる場合は、リンク先とサービス名が分かる名前を付ける。",
+    "palette_integration": "採用アイコンの青と、現行案のプラム系UI配色を組み合わせてブラウザ上で確認する。UI全体の色トークンは現行案を維持する。",
+    "color_vision_considerations": {
+      "user_comment": "ユーザーは「色弱の人も見やすい」と述べている。",
+      "supplied_comparison": {
+        "file": "04-design-samples/07-icon-grayscale-comparison.png",
+        "original_filename": "sample5",
+        "width_px": 1488,
+        "height_px": 1040,
+        "size_bytes": 525711,
+        "sha256": "fdd00c4badc335b5778a96c3272bf5189ed14d1a21f6d17771b2afc8d6664a22",
+        "source_description": "資料には、同じ元画像から色だけを除去し、再生成・コントラスト補正なしと記載されている。変換処理は本タスクでは再実行していない。"
+      },
+      "visual_observation": "比較画像の03では、グレースケールでも帯と本体の明暗差、アーチの外形、中央の抜きを確認できる。32px・48pxと記された表示例にも中央の抜きが残る。",
+      "verification_status": "提供された比較画像を目視確認済み。色覚タイプ別のシミュレーション、実ブラウザの小サイズ表示、当事者による識別性の確認は未実施。画像上の表示例と実装後の確認結果は区別する。",
+      "next_checks": ["実ブラウザの16・32・48px表示で外形と中央の抜きを確認", "1型・2型・3型の色覚シミュレーションで補助確認", "実際の背景とフォーカス表示で確認", "可能なら色覚特性のある利用者に識別性を確認"],
+      "claim_rule": "色名を見分けられることを操作の前提にしない。シミュレーションだけで、すべての色覚特性に見やすいと断定しない。"
+    }
+  },
+  "art_direction": {
+    "name": "Editorial Accessibility Portal",
+    "concept": "読み物としての落ち着きと、最近の評価を一覧できるポータルの実用性を両立する。",
+    "visual_style": "温かな白、墨色の文字、深いプラム、細い罫線、整列した情報、十分な余白。reference_images.home_desktopの雰囲気を継承する。",
+    "visual_priority": "大きな主見出し、最近の評価一覧、読み取りやすい点数、改善案への導線。",
+    "hero_visual": "右側にオフ白のノートを模した柔らかなモチーフを置き、操作と結果・条件と範囲・改善と再確認を整理する。机や植物の気配は背景に控えめに限定する。",
+    "texture_boundary": "ヒーローの装飾にだけ浅い陰影を使い、本文・一覧・ボタンをガラス化しない。実装時の重要な文字は画像に焼き込まずHTMLにする。",
+    "hero_implementation": "ノートの見出しと3項目はHTMLで表す。紙の面や影はCSS、背景の植物や机を使う場合は文字を含まない装飾画像とする。狭い画面では装飾を減らし、固有の説明文は維持する。"
+  },
+  "design_system": {
+    "colors": {
+      "page": "#FAF9F6",
+      "surface": "#FFFFFF",
+      "text": "#252724",
+      "secondary_text": "#5C5B55",
+      "brand": "#62456D",
+      "brand_tint": "#F2EDF4",
+      "divider": "#DAD8D0",
+      "control_border": "#79756E",
+      "sage_text": "#285841",
+      "sage_surface": "#EAF3ED",
+      "wheat_text": "#754700",
+      "wheat_surface": "#FFF1D6",
+      "plum_text": "#62456D",
+      "plum_surface": "#F2EDF4",
+      "brand_hover": "#4D3457",
+      "brand_active": "#392641",
+      "link_visited": "#7D337D"
+    },
+    "color_roles": {
+      "source": "元JSONの独自パレット。DADS公式カラー値と同一とは扱わない。",
+      "divider": "#DAD8D0は装飾用。操作部品、意味を持つ区切り、状態の唯一の手掛かりには使用しない。",
+      "control_border": "#79756Eを白・オフ白上の操作枠や意味を持つ区切りに使用する。本文色には流用しない。",
+      "score_variants": "sage・wheat・plumはサンプル上の配色比較。成功・警告・失敗の意味や点数の閾値を割り当てない。",
+      "link": "通常はbrand、hoverはbrand_hover、activeはbrand_active、visitedはlink_visited。本文リンクには常時下線を付ける。",
+      "focus": "DADSのYellow-300とBlackの組み合わせを使用する。フォーカスをブランド色に置き換えない。値と形状は実装時に採用する公式トークン・スニペットのリビジョンで固定する。"
+    },
+    "typography": {
+      "japanese": "Noto Sans JP, sans-serif",
+      "latin": "Inter, sans-serif",
+      "desktop_hero_px": 52,
+      "mobile_hero_px": 30,
+      "section_heading_px": 28,
+      "body_px": 18,
+      "list_body_px": 16,
+      "minimum_note_px": 14,
+      "score_px": 36,
+      "body_line_height": 1.75,
+      "heading_line_height": 1.4,
+      "number_style": "点数には桁幅の揃った数字を用い、100の分母は小さく添える。",
+      "implementation_units": "px値は標準16px設定時の見た目の参考。実装ではrootを100%に保ち、文字をrem、行間を単位なしで指定する。見出しはremを含むclampで調整する。",
+      "font_loading": "Noto Sans JPとInterは候補。初回はsystem-uiと日本語フォールバックでも成立させる。Webフォントを使う場合はswapと代替表示を確認する。",
+      "note_policy": "14px相当は短い補助情報の下限案。サンプル注記・確認範囲・採点方式の説明は16px相当以上にする。"
+    },
+    "layout": {
+      "desktop_width_px": 1440,
+      "content_max_width_px": 1184,
+      "desktop_columns": 12,
+      "gutter_px": 24,
+      "mobile_width_px": 390,
+      "mobile_side_padding_px": 20,
+      "surface_radius_px": 12,
+      "button_radius_px": 8,
+      "minimum_control_height_px": 48,
+      "spacing_scale_px": [4, 8, 12, 16, 24, 32, 48, 64, 96],
+      "stacked_below_rem": 64,
+      "breakpoint_policy": "64rem未満を縦配置の初期案にする。長い日本語、320 CSS px、文字拡大で検証して調整する。PC・モバイルに同じDOMとデータを使用する。",
+      "height_policy": "行・ボタン・ヒーローは内容に応じて縦に伸びる。画像の高さや行数を固定して切り取らない。48pxは独立した操作部品の最小寸法案で、文中リンクに一律適用しない。"
+    },
+    "interaction": {
+      "navigation": "3つのナビゲーションリンクをPC・モバイル共通で常時表示し、必要なら折り返す。初期版では開閉メニューを追加しない。",
+      "links_and_actions": "移動はaまたはNext.js Link、処理の実行はbuttonとする。塗りボタン風の評価レポートを見るも、ページ内移動ならリンクとして実装する。",
+      "focus": "Tab・Shift+Tabで順に到達できる。DADSの黒と黄色の表示を使い、overflowや重なりで切れないようにする。強制カラーモードでもoutlineを残す。",
+      "hover": "色や下線の太さで応答を示す。文字サイズや太さの変更でレイアウトを動かさない。",
+      "motion": "初期版は自動再生や入場アニメーションを加えない。動きを追加する場合はprefers-reduced-motionに対応する。"
+    }
+  },
+  "dads_adoption": {
+    "mode": "DADSを参照してa11y Portal向けに設計した独自UI",
+    "documentation_version_observed": "2.18.0",
+    "checked_on": "2026-09-13",
+    "adopt": ["リンクと操作の区別", "フォーカス表示", "見出しと余白の階層", "リソースリスト", "説明リスト", "パンくず", "状態のテキスト表現"],
+    "retain_from_brief": ["温かな白とプラムのパレット", "編集記事風のレイアウト", "ノートのモチーフ", "点数バッジ", "文字サイズ・余白の初期案"],
+    "implementation_strategy": "現在のNext.js・React 19・通常のCSSに合わせ、公式の仕様とHTML例を必要な部品単位で参照する。コードを転用する際は取得元、リビジョン、ライセンス、変更点を記録する。React例を直接使う場合は依存とReact 19互換性を先に確認する。",
+    "source_status": "この版で取り入れたのは公式文書の設計指針。コードスニペットやパッケージの導入はまだ行っていない。",
+    "attribution": "出典：デジタル庁デザインシステム。Codexが本プロジェクト向けに指針を要約・編集した。公式の未改変資料や適合認証として表示しない。",
+    "sources": {
+      "overview": "https://design.digital.go.jp/dads/",
+      "color": "https://design.digital.go.jp/dads/foundations/color/",
+      "typography": "https://design.digital.go.jp/dads/foundations/typography/",
+      "link_text": "https://design.digital.go.jp/dads/foundations/link-text/",
+      "resource_list": "https://design.digital.go.jp/dads/components/resource-list/",
+      "button": "https://design.digital.go.jp/dads/components/button/",
+      "notices": "https://design.digital.go.jp/dads/introduction/notices/"
+    }
+  },
+  "shared_copy": {
+    "navigation": ["評価レポート", "評価の考え方", "補足・訂正"],
+    "eyebrow": "操作と改善の公開記録",
+    "hero_heading_lines": [
+      "Webの「困った」を、",
+      "「直せる」につなぐ。"
+    ],
+    "hero_description": "操作のつまずき、確認した条件、改善のヒントをひとつに。Webサイトのアクセシビリティ評価を公開し、つくる人・使う人・運営する人の次の改善につなげます。",
+    "primary_action": "評価レポートを見る",
+    "secondary_action": "評価の考え方を読む",
+    "hero_note_heading": "ひらかれた観測ノート",
+    "hero_note_items": ["操作と結果", "条件と範囲", "改善と再確認"],
+    "recent_heading": "最近評価したサイト",
+    "recent_count": "サンプル 5件",
+    "all_reports_action": "すべての評価レポートを見る",
+    "report_action": "操作結果と改善案を見る",
+    "sample_notice": "サイト名・評価日・点数は画面設計用のサンプルです。実測結果ではありません。",
+    "score_notice": "点数の採点方法は検討中です。対象ページの評価であり、サイト全体の適合を保証するものではありません。",
+    "method_heading": "評価の考え方",
+    "method_intro": "点数だけでなく、確認した操作・環境・改善案を記録します。",
+    "method_points": [
+      {
+        "title": "検査と操作確認は別々に",
+        "description": "自動検査の結果と、人が操作して確かめたことを区別して掲載します。"
+      },
+      {
+        "title": "確認した範囲を明確に",
+        "description": "対象ページ、操作、環境を記録し、未確認の範囲も示します。"
+      },
+      {
+        "title": "指摘から改善へ",
+        "description": "困りごととともに改善のヒントを示し、同じ手順での再確認につなげます。"
+      }
+    ],
+    "correction_heading": "補足・訂正について",
+    "correction_note": "連絡先は公開前に設定します。",
+    "footer_tagline": "よりよいWebを、ともにつくる。"
+  },
+  "recent_evaluations": {
+    "placement": "ヒーロー直下。1440px・標準文字サイズでは上部から約560px以内に見出しが現れることを目安とする。狭い幅や拡大時は情報の保持を優先し、固定の高さ制約にしない。",
+    "order": "評価日が新しい順。点数順のランキングにしない。",
+    "maximum_visible_items": 5,
+    "data_rule": "実運用は存在する評価のみを表示する。1件なら1件だけで成立させる。以下の5件は画面設計専用。",
+    "desktop_layout": "横長の行を縦に並べる。巨大なカードやサムネイルではなく、サイト名・対象・短評・日付・点数を整列させる。",
+    "desktop_columns": [
+      {"label": "サイト", "width_ratio": 0.27},
+      {"label": "対象ページ・範囲", "width_ratio": 0.17},
+      {"label": "評価の概要", "width_ratio": 0.29},
+      {"label": "評価日", "width_ratio": 0.12},
+      {"label": "評価スコア", "width_ratio": 0.15}
+    ],
+    "row_min_height_px": 112,
+    "site_identity": "小さな架空のサイトマーク、太字のサイト名、その下に.exampleドメインを表示する。実在組織のロゴを使わない。",
+    "navigation_rule": "サイト名を含むリンク名から個別レポートへ進む。1件につき主リンクは1つを基本とし、行全体のクリック処理と入れ子のリンクを併用しない。矢印は補助的に表示する。",
+    "mobile_layout": "1件ずつ縦型に再配置する。上段はサイト名と点数、下段は対象ページ・短評・評価日・詳細リンク。狭い場合は点数も次の行へ折り返す。横スクロール表にしない。",
+    "semantics": "各レポートが独立した読み物なのでul/liを基本にし、各項目のサイト名を見出し、対象や日付などをラベル付きで表示する。5列の配置はCSS Gridで作る。比較表が必要になる将来の画面ではtableを再検討する。",
+    "reading_order": "サイト名→対象ページと範囲→短評→評価日→点数を基本とする。モバイルで点数を上へ置いても同じレポート内のまとまりを維持し、キーボード操作の順序をCSSで入れ替えない。",
+    "count_rule": "recent_countは画像用文言。実装では表示するデータから件数とサンプル表示を生成する。存在しない評価を足して5件にしない。",
+    "all_reports_rule": "一覧の別ページがない初期版では、すべての評価レポートを見るを表示しない。同じ一覧に戻るだけのリンクを作らない。"
+  },
+  "score_display": {
+    "label": "評価スコア",
+    "format": "{value} / 100",
+    "scale_status": "100点満点は表示案。採点方法は未決定。",
+    "scoring_method": null,
+    "badge_design": "右側に太字の点数と小さめの分母を配置。淡い背景の角丸バッジにする。円形ゲージは使わない。",
+    "badge_color_rule": "サンプルのsage・wheat・plumは配色の比較用。点数の閾値や合否の定義として扱わない。本番の色分けは採点方式と別途決める。",
+    "missing_value": "未採点",
+    "error_rule": "未採点・未確認を0点にしない。検査エラーは検査エラーとして区別する。",
+    "production_metadata": [
+      "採点方式とバージョン",
+      "評価ツールまたは評価者",
+      "評価対象・条件",
+      "評価日時"
+    ],
+    "interpretation": "自動検査・操作確認・再評価は点数と別に表示する。点数をWCAG適合率や全利用者の操作成功率と言い換えない。",
+    "production_rule": "scoring_methodがnullの間、実測レポートは未採点と表示する。架空の数値はis_sampleがtrueの画面設計データに限る。100点満点を採用する場合の数値は有限の0以上100以下とし、範囲外は欠損や0点に丸めずデータエラーとして扱う。",
+    "production_badge_variant_proposal": "採点の色分けが決まるまでは全件plumに統一する案。v2.0のサンプル配色3種は比較資料として保持する。",
+    "reading_contract": "ラベル・値・分母・サンプルの意味を通常のHTMLテキストとして読めるようにする。数字を桁ごとのspanにしない。実機で読みが分断する場合に限り、同じ値から一続きの補助テキストを作る方法を検討する。"
+  },
+  "demo_evaluations": [
+    {
+      "id": "sample-001",
+      "is_sample": true,
+      "site_name": "サンプル市 くらしの手続き",
+      "domain": "city.example",
+      "target_page": "トップページ",
+      "scope": "1ページ・1操作",
+      "summary": "メニューボタンの名前を見直し、操作の目的が伝わるようにする。",
+      "evaluation_date": "2026-09-13",
+      "score": 82,
+      "score_badge_variant": "sage"
+    },
+    {
+      "id": "sample-002",
+      "is_sample": true,
+      "site_name": "サンプル大学 入学案内",
+      "domain": "university.example",
+      "target_page": "入試情報ページ",
+      "scope": "1ページ・1操作",
+      "summary": "フォームのラベルと入力エラーの伝え方に改善の余地がある。",
+      "evaluation_date": "2026-09-12",
+      "score": 76,
+      "score_badge_variant": "wheat"
+    },
+    {
+      "id": "sample-003",
+      "is_sample": true,
+      "site_name": "サンプルストア",
+      "domain": "store.example",
+      "target_page": "商品詳細ページ",
+      "scope": "1ページ・1操作",
+      "summary": "確認した操作ではキーボードで商品情報に到達。ほかの操作は未確認。",
+      "evaluation_date": "2026-09-11",
+      "score": 91,
+      "score_badge_variant": "sage"
+    },
+    {
+      "id": "sample-004",
+      "is_sample": true,
+      "site_name": "サンプルテック株式会社",
+      "domain": "tech.example",
+      "target_page": "会社概要ページ",
+      "scope": "1ページ・1操作",
+      "summary": "リンクの識別と文字のコントラストを見直す。",
+      "evaluation_date": "2026-09-10",
+      "score": 68,
+      "score_badge_variant": "plum"
+    },
+    {
+      "id": "sample-005",
+      "is_sample": true,
+      "site_name": "サンプル環境財団",
+      "domain": "foundation.example",
+      "target_page": "活動レポートページ",
+      "scope": "1ページ・1操作",
+      "summary": "確認したページの構造は整理されている。リンク先のPDFは未確認。",
+      "evaluation_date": "2026-09-09",
+      "score": 88,
+      "score_badge_variant": "sage"
+    }
+  ],
+  "report_detail": {
+    "selected_report_id": "sample-001",
+    "consistency_rule": "一覧と同じサイト名・対象ページ・日付・82 / 100を使い、サンプル注記も引き継ぐ。",
+    "heading": "メニューから手続き案内へ進む",
+    "method_status_examples": {
+      "自動検査": "指摘あり（例）",
+      "操作確認": "課題あり（例）",
+      "再評価": "未実施（例）"
+    },
+    "sections": [
+      "目的の操作",
+      "期待する結果と操作結果",
+      "利用者への影響",
+      "再現手順",
+      "改善のヒント",
+      "修正後の確認方法"
+    ],
+    "goal": "メニューを開いて、手続きの案内ページへ移動する。",
+    "expected_result": "メニューボタンの用途が分かり、目的のページへ進める。",
+    "sample_result": "「ボタン」とだけ読み上げられ、何の操作か判断できない。",
+    "sample_impact": "メニューの入口を見つけにくく、目的のページへの移動につまずく可能性がある。",
+    "reproduction_steps": [
+      "トップページを開く。",
+      "VoiceOverでメニューボタンに移動する。",
+      "ボタンの読み上げを聞き、メニューを開いて手続き案内へ進む。"
+    ],
+    "improvement_hint": "メニューボタンに用途が分かる名前を付け、開閉状態が支援技術に伝わるようにする。",
+    "recheck_steps": [
+      "同じ環境と手順で、ボタンの用途と開閉状態が伝わるか確かめる。",
+      "メニューを開き、手続き案内への移動を最後まで確認する。",
+      "キーボードによる操作の結果は、VoiceOverでの結果と分けて記録する。"
+    ],
+    "environment": {
+      "OS": "macOS（想定）",
+      "browser": "Safari（想定）",
+      "assistive_technology": "VoiceOver（想定）",
+      "versions": "未記録"
+    },
+    "unverified_scope": [
+      "他のページ・操作",
+      "スマートフォン",
+      "他のブラウザ・支援技術",
+      "キーボードによる操作"
+    ],
+    "supporting_information": [
+      "対象URL",
+      "評価日",
+      "採点方法は検討中",
+      "確認環境",
+      "未確認の範囲",
+      "関連する基準",
+      "補足・訂正"
+    ],
+    "related_criteria": "WCAGの関連要件は実測時に整理します。",
+    "desktop_layout": "上部に対象と点数。その下は本文と補助情報の2列。改善案を閉じたタブやアコーディオンに隠さない。",
+    "mobile_layout": "1列。対象・点数・主要環境を上部にまとめ、本文と補助情報を縦に続ける。",
+    "semantics": "目的の操作をページの主見出しとし、各節を見出しで示す。再現と再確認の手順はol、確認環境はdl、補助情報には対応する見出しを付ける。",
+    "sample_url_rule": "city.example等は架空の対象URLとしてテキスト表示する。動作する外部サイトへのリンクに見せない。実測の対象URLだけを通常の外部リンクにする。",
+    "method_status_rule": "method_status_examplesはsample-001だけの架空の例。ほかのレポートの検査状況や結果に流用しない。"
+  },
+  "screen_briefs": [
+    {
+      "id": "01-home-desktop",
+      "path": "/",
+      "artboard_reference_px": [1440, 1500],
+      "sections": [
+        "ヘッダー",
+        "ヒーロー",
+        "最近評価したサイト5件",
+        "評価の考え方",
+        "補足・訂正",
+        "フッター"
+      ]
+    },
+    {
+      "id": "02-report-desktop",
+      "path": "/reports/sample-001/",
+      "artboard_reference_px": [1440, 1800],
+      "content": "report_detailを使用する。"
+    },
+    {
+      "id": "03-home-mobile",
+      "path": "/",
+      "artboard_reference_px": [390, 2000],
+      "content": "トップページを縦型に再構成する。収まらない項目は下へ続ける。"
+    },
+    {
+      "id": "04-report-mobile",
+      "path": "/reports/sample-001/",
+      "artboard_reference_px": [390, 2400],
+      "content": "report_detailのモバイルレイアウトを使用する。"
+    }
+  ],
+  "rendering_contract": {
+    "first_screen": "01-home-desktop",
+    "one_screen_per_image": true,
+    "presentation": "正面から見た精細なWebページのモック。端末枠、ブラウザの外枠、比較ボード、スライドの説明枠を付けない。",
+    "text_priority": "a11y Portal、最近評価したサイト、サイト名、点数、サンプル注記を正確に読めるようにする。",
+    "overflow_rule": "参照寸法に収めるために文字を縮小しない。ページの下部を自然に画面外へ続ける。",
+    "mode_boundary": "screen_briefsとrendering_contractは静止画モック用。実装のHTML構造・状態・検証はaccessibility_contractとimplementation_handoffも参照する。生成画像を実装の合格証拠として使わない。",
+    "consistency": "全4画面でa11y Portal、同一レポートの値、サンプル注記、点数表示を一致させる。"
+  },
+  "accessibility_contract": {
+    "workflow_skill": "information-accessibility-practice",
+    "current_phase": "設計。実画面のアクセシビリティ評価は未実施。",
+    "implementation_target_proposal": "WCAG 2.2 A/AAを実装と検証の目標にする。これは目標案であり、適合を表す結果ではない。",
+    "semantics": "lang=ja、意味のあるページタイトル、1つのmain、見出し階層、ナビゲーション、本文へ移動するリンクを保持する。",
+    "contrast": "本文と注記は前景と背景で4.5:1以上を設計基準とする。操作を識別する枠や意味を持つ図形は隣接色と3:1以上を確保する。装飾罫線を操作の唯一の識別手段にしない。",
+    "reflow": "320 CSS px幅、および1280 CSS px相当からの400%ズームで、本文・一覧・点数が切れず縦に読めることを確認する。文字だけの200%拡大も別に確認する。",
+    "text_spacing": "行間1.5倍、段落後2倍、字間0.12em、単語間0.16emへの一括変更で情報や機能が欠落しないことを確認する。言語に適用されない設定はその条件を記録する。",
+    "target_size": "独立した主操作は幅・高さ48 CSS px以上をチームの設計値とする。これはWCAG 2.5.8の最低寸法そのものではない。文中リンクを含む各対象は基準の例外・間隔条件も確認する。",
+    "images": "ノートの重要な文字、点数、説明をHTMLで表示する。装飾画像は空のaltにし、情報画像には同等の説明を付ける。",
+    "screen_reader": "一覧→詳細→改善案→一覧へ戻る経路をVoiceOver/Safariで確認する。WindowsではNVDAと対応ブラウザでも補助確認できるが、VoiceOverでの確認結果に代えない。OS・ブラウザ・支援技術のバージョンと結果を残す。",
+    "evidence_boundary": "自動検査、DOMの観測、キーボードの操作記録、実際の読み上げを区別する。AIがスキルの評価記録を作る場合はE0/E1の観測として保存し、人の確認済み記録に変換しない。"
+  },
+  "implementation_handoff": {
+    "scope": "共通UIの基礎と一覧・詳細の実装に向けた草案。DB設計・採点アルゴリズム・認証・デプロイの仕様ではない。",
+    "existing_stack": "Next.js App Router、React 19、TypeScript、通常のCSS。",
+    "candidate_surfaces": [
+      {"path": "src/app/globals.css", "purpose": "色・文字・余白・フォーカスの共通トークン"},
+      {"path": "src/app/layout.tsx", "purpose": "ブランド・共通ナビゲーション・スキップリンク"},
+      {"path": "src/app/page.tsx", "purpose": "ヒーローと最近の評価一覧"},
+      {"path": "src/components/ui/", "purpose": "リンク、点数、状態、注記の必要な共通部品。追加候補"},
+      {"path": "src/app/reports/[reportId]/page.tsx", "purpose": "評価詳細。追加候補"}
+    ],
+    "ownership": "上記は担当候補。共有CSS・レイアウトと一覧・詳細の編集担当をチームで合わせてから実装する。",
+    "data_contract": "一覧と詳細は同じレポートID・値を参照する。点数はnumberまたはnullとし、サンプル属性、対象、日時、環境、方法、状態を別の項目で管理する。最終的な型はデータ担当と合わせる。",
+    "prototype_scope": "最初の動作確認は詳細の材料が揃うsample-001を一覧から読める状態にする。5件は静止画と一覧の密度確認に使える。ほか4件の詳細はこのJSONに含まれないため、存在しない詳細へのリンクを有効にしない。",
+    "navigation_targets": {"reports": "/#recent-reports", "method": "/#evaluation-method", "corrections": "/#corrections"},
+    "states_to_design": ["0件", "1件", "5件", "長いサイト名", "点数なし", "検査エラー", "不明なレポートID"],
+    "public_release_inputs": ["実測または明記されたサンプルのレポート", "動作する訂正連絡先", "実測の数値を出す場合は採点方式と根拠"],
+    "verification": ["lint・typecheck・build", "JSONとリンク先の整合", "実ブラウザで配色・フォーカス・拡大表示", "主要経路のキーボード操作", "自動アクセシビリティ検査", "VoiceOver実機確認と確認範囲の記録"]
+  },
+  "implementation_checks": [
+    "見出し・ナビゲーション・本文を意味のあるHTMLで構成する。",
+    "キーボードフォーカスを視認できるようにし、主要導線をキーボードとVoiceOverで確認する。",
+    "色だけで点数や状態を伝えず、ラベルと数値を文字で示す。",
+    "狭い表示・文字拡大・長いサイト名でも情報を欠落させない。",
+    "モックの見た目だけでアクセシビリティ適合済みと宣言しない。",
+    "公開時は実測またはサンプルの区別と訂正連絡先を整える。実測の点数を公開する場合は採点方式・条件・根拠を確定する。未採点や明記したサンプルでの公開も可能。"
+  ],
+  "avoid": [
+    "旧サービス名をブランドとして画面に表示すること",
+    "点数を消して状態ラベルだけに戻すこと",
+    "点数順のランキングや合格認証マークへの変更",
+    "サンプル注記を消すこと、架空の評価を実在組織に結び付けること",
+    "資料のスライド配色やレイアウトの再現",
+    "未指定の検索・ログイン・自動診断・チャットウィジェットの追加",
+    "本文や評価一覧の半透明化、過剰な影、円形ゲージの多用",
+    "小さな低コントラスト文字、アイコンだけのリンク",
+    "1枚にPC・モバイル・別ページを合成すること"
+  ]
+}
