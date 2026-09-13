@@ -115,6 +115,8 @@ vercel env pull
 
 `main`へのpushで`.github/workflows/deploy.yml`が動き、本番へデプロイします。Actionsの画面から手動実行（workflow_dispatch）もできます。
 
+ワークフローは3本あります。PRでの検査は`ci.yml`、`develop`へのpushでのプレビューデプロイは`preview.yml`が担当します。詳細は[ブランチ戦略](02-branch-strategy.md)を参照してください。
+
 ワークフローは`migrate`と`deploy`の2ジョブで構成します。先に`supabase db push`でDBスキーマを反映し、成功した場合のみアプリを配信します。`deploy`ジョブの処理順は`npm ci` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`で、lintか型検査で失敗した場合はデプロイしません。
 
 Vercel GitHub Appは使いません。Appのインストールにはリポジトリ所有者の承認が必要ですが、この方式はWrite権限だけで完結するためです。
