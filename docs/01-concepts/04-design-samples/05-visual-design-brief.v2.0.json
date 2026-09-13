@@ -1,0 +1,346 @@
+{
+  "document_type": "frontend_visual_design_brief",
+  "version": "2.0",
+  "language": "ja-JP",
+  "project": {
+    "id": "a11y-portal",
+    "service_name": "a11y Portal",
+    "purpose": "Webサイトのアクセシビリティ評価を公開し、操作上の困りごと・改善案・再確認につなげる。",
+    "audiences": [
+      "Webサイトの制作者・開発者",
+      "Webサイトの運営者",
+      "障害のある利用者・評価協力者",
+      "共同開発に参加するメンバー"
+    ],
+    "experience": ["評価を見つける", "困りごとを理解する", "直す", "確かめる"]
+  },
+  "source_policy": {
+    "concept_file": "01-project-concept.md",
+    "supporting_files": [
+      "web-accessibility-portal.pdf",
+      "f-team-workshop-plan.pdf"
+    ],
+    "reference_image_name": "アクセシビリティ評価ポータルui.png",
+    "latest_user_requirements": [
+      "サイト名をa11y Portalにする",
+      "トップページに最近評価したサイトの一覧を置く",
+      "一覧に点数を表示する"
+    ],
+    "superseded_rules": [
+      "旧サービス仮称を画面に表示すること",
+      "トップ画面の表示例を1件に固定すること",
+      "点数表示を一律に禁止すること"
+    ],
+    "proposal_boundary": "採点方法、100点満点の表示案、サンプルデータ、アイコン案は確定した実測仕様ではない。最新のユーザー要望を反映したデザイン提案として扱う。"
+  },
+  "brand": {
+    "wordmark": "a11y Portal",
+    "spelling_rule": "aは小文字、11は数字、yは小文字、半角スペースの後にPortal。ヘッダーとフッターで統一する。",
+    "current_symbol": "直前の画像にあるプラムとグレーの重なった円形マークを暫定使用する。",
+    "new_icon_status": "別JSONで3案を検討中。採用決定前に新アイコンへ置き換えない。",
+    "future_logo_rule": "採用したアイコンと同じ輪郭のフラット版を、Webヘッダーのシンボルとして使う。"
+  },
+  "art_direction": {
+    "name": "Editorial Accessibility Portal",
+    "concept": "読み物としての落ち着きと、最近の評価を一覧できるポータルの実用性を両立する。",
+    "visual_style": "温かな白、墨色の文字、深いプラム、細い罫線、整列した情報、十分な余白。直前の画像の雰囲気を継承する。",
+    "visual_priority": "大きな主見出し、最近の評価一覧、読み取りやすい点数、改善案への導線。",
+    "hero_visual": "右側にオフ白のノートを模した柔らかなモチーフを置き、操作と結果・条件と範囲・改善と再確認を整理する。机や植物の気配は背景に控えめに限定する。",
+    "texture_boundary": "ヒーローの装飾にだけ浅い陰影を使い、本文・一覧・ボタンをガラス化しない。実装時の重要な文字は画像に焼き込まずHTMLにする。"
+  },
+  "design_system": {
+    "colors": {
+      "page": "#FAF9F6",
+      "surface": "#FFFFFF",
+      "text": "#252724",
+      "secondary_text": "#5C5B55",
+      "brand": "#62456D",
+      "brand_tint": "#F2EDF4",
+      "divider": "#DAD8D0",
+      "control_border": "#79756E",
+      "sage_text": "#285841",
+      "sage_surface": "#EAF3ED",
+      "wheat_text": "#754700",
+      "wheat_surface": "#FFF1D6",
+      "plum_text": "#62456D",
+      "plum_surface": "#F2EDF4"
+    },
+    "typography": {
+      "japanese": "Noto Sans JP, sans-serif",
+      "latin": "Inter, sans-serif",
+      "desktop_hero_px": 52,
+      "mobile_hero_px": 30,
+      "section_heading_px": 28,
+      "body_px": 18,
+      "list_body_px": 16,
+      "minimum_note_px": 14,
+      "score_px": 36,
+      "body_line_height": 1.75,
+      "heading_line_height": 1.4,
+      "number_style": "点数には桁幅の揃った数字を用い、100の分母は小さく添える。"
+    },
+    "layout": {
+      "desktop_width_px": 1440,
+      "content_max_width_px": 1184,
+      "desktop_columns": 12,
+      "gutter_px": 24,
+      "mobile_width_px": 390,
+      "mobile_side_padding_px": 20,
+      "surface_radius_px": 12,
+      "button_radius_px": 8,
+      "minimum_control_height_px": 48,
+      "spacing_scale_px": [4, 8, 12, 16, 24, 32, 48, 64, 96]
+    }
+  },
+  "shared_copy": {
+    "navigation": ["評価レポート", "評価の考え方", "補足・訂正"],
+    "eyebrow": "操作と改善の公開記録",
+    "hero_heading_lines": [
+      "Webの「困った」を、",
+      "「直せる」につなぐ。"
+    ],
+    "hero_description": "操作のつまずき、確認した条件、改善のヒントをひとつに。Webサイトのアクセシビリティ評価を公開し、つくる人・使う人・運営する人の次の改善につなげます。",
+    "primary_action": "評価レポートを見る",
+    "secondary_action": "評価の考え方を読む",
+    "hero_note_heading": "ひらかれた観測ノート",
+    "hero_note_items": ["操作と結果", "条件と範囲", "改善と再確認"],
+    "recent_heading": "最近評価したサイト",
+    "recent_count": "サンプル 5件",
+    "all_reports_action": "すべての評価レポートを見る",
+    "report_action": "操作結果と改善案を見る",
+    "sample_notice": "サイト名・評価日・点数は画面設計用のサンプルです。実測結果ではありません。",
+    "score_notice": "点数の採点方法は検討中です。対象ページの評価であり、サイト全体の適合を保証するものではありません。",
+    "method_heading": "評価の考え方",
+    "method_intro": "点数だけでなく、確認した操作・環境・改善案を記録します。",
+    "method_points": [
+      {
+        "title": "検査と操作確認は別々に",
+        "description": "自動検査の結果と、人が操作して確かめたことを区別して掲載します。"
+      },
+      {
+        "title": "確認した範囲を明確に",
+        "description": "対象ページ、操作、環境を記録し、未確認の範囲も示します。"
+      },
+      {
+        "title": "指摘から改善へ",
+        "description": "困りごととともに改善のヒントを示し、同じ手順での再確認につなげます。"
+      }
+    ],
+    "correction_heading": "補足・訂正について",
+    "correction_note": "連絡先は公開前に設定します。",
+    "footer_tagline": "よりよいWebを、ともにつくる。"
+  },
+  "recent_evaluations": {
+    "placement": "ヒーロー直下。デスクトップではページ上部から約560px以内に見出しが現れる。",
+    "order": "評価日が新しい順。点数順のランキングにしない。",
+    "maximum_visible_items": 5,
+    "data_rule": "実運用は存在する評価のみを表示する。1件なら1件だけで成立させる。以下の5件は画面設計専用。",
+    "desktop_layout": "横長の行を縦に並べる。巨大なカードやサムネイルではなく、サイト名・対象・短評・日付・点数を整列させる。",
+    "desktop_columns": [
+      {"label": "サイト", "width_ratio": 0.27},
+      {"label": "対象ページ・範囲", "width_ratio": 0.17},
+      {"label": "評価の概要", "width_ratio": 0.29},
+      {"label": "評価日", "width_ratio": 0.12},
+      {"label": "評価スコア", "width_ratio": 0.15}
+    ],
+    "row_min_height_px": 112,
+    "site_identity": "小さな架空のサイトマーク、太字のサイト名、その下に.exampleドメインを表示する。実在組織のロゴを使わない。",
+    "navigation_rule": "サイト名または文字付きの詳細リンクから個別レポートへ進む。矢印だけに操作を依存させない。",
+    "mobile_layout": "1件ずつ縦型に再配置する。上段はサイト名と点数、下段は対象ページ・短評・評価日・詳細リンク。狭い場合は点数も次の行へ折り返す。横スクロール表にしない。"
+  },
+  "score_display": {
+    "label": "評価スコア",
+    "format": "{value} / 100",
+    "scale_status": "100点満点は表示案。採点方法は未決定。",
+    "scoring_method": null,
+    "badge_design": "右側に太字の点数と小さめの分母を配置。淡い背景の角丸バッジにする。円形ゲージは使わない。",
+    "badge_color_rule": "サンプルのsage・wheat・plumは配色の比較用。点数の閾値や合否の定義として扱わない。本番の色分けは採点方式と別途決める。",
+    "missing_value": "未採点",
+    "error_rule": "未採点・未確認を0点にしない。検査エラーは検査エラーとして区別する。",
+    "production_metadata": [
+      "採点方式とバージョン",
+      "評価ツールまたは評価者",
+      "評価対象・条件",
+      "評価日時"
+    ],
+    "interpretation": "自動検査・操作確認・再評価は点数と別に表示する。点数をWCAG適合率や全利用者の操作成功率と言い換えない。"
+  },
+  "demo_evaluations": [
+    {
+      "id": "sample-001",
+      "is_sample": true,
+      "site_name": "サンプル市 くらしの手続き",
+      "domain": "city.example",
+      "target_page": "トップページ",
+      "scope": "1ページ・1操作",
+      "summary": "メニューボタンの名前を見直し、操作の目的が伝わるようにする。",
+      "evaluation_date": "2026-09-13",
+      "score": 82,
+      "score_badge_variant": "sage"
+    },
+    {
+      "id": "sample-002",
+      "is_sample": true,
+      "site_name": "サンプル大学 入学案内",
+      "domain": "university.example",
+      "target_page": "入試情報ページ",
+      "scope": "1ページ・1操作",
+      "summary": "フォームのラベルと入力エラーの伝え方に改善の余地がある。",
+      "evaluation_date": "2026-09-12",
+      "score": 76,
+      "score_badge_variant": "wheat"
+    },
+    {
+      "id": "sample-003",
+      "is_sample": true,
+      "site_name": "サンプルストア",
+      "domain": "store.example",
+      "target_page": "商品詳細ページ",
+      "scope": "1ページ・1操作",
+      "summary": "確認した操作ではキーボードで商品情報に到達。ほかの操作は未確認。",
+      "evaluation_date": "2026-09-11",
+      "score": 91,
+      "score_badge_variant": "sage"
+    },
+    {
+      "id": "sample-004",
+      "is_sample": true,
+      "site_name": "サンプルテック株式会社",
+      "domain": "tech.example",
+      "target_page": "会社概要ページ",
+      "scope": "1ページ・1操作",
+      "summary": "リンクの識別と文字のコントラストを見直す。",
+      "evaluation_date": "2026-09-10",
+      "score": 68,
+      "score_badge_variant": "plum"
+    },
+    {
+      "id": "sample-005",
+      "is_sample": true,
+      "site_name": "サンプル環境財団",
+      "domain": "foundation.example",
+      "target_page": "活動レポートページ",
+      "scope": "1ページ・1操作",
+      "summary": "確認したページの構造は整理されている。リンク先のPDFは未確認。",
+      "evaluation_date": "2026-09-09",
+      "score": 88,
+      "score_badge_variant": "sage"
+    }
+  ],
+  "report_detail": {
+    "selected_report_id": "sample-001",
+    "consistency_rule": "一覧と同じサイト名・対象ページ・日付・82 / 100を使い、サンプル注記も引き継ぐ。",
+    "heading": "メニューから手続き案内へ進む",
+    "method_status_examples": {
+      "自動検査": "指摘あり（例）",
+      "操作確認": "課題あり（例）",
+      "再評価": "未実施（例）"
+    },
+    "sections": [
+      "目的の操作",
+      "期待する結果と操作結果",
+      "利用者への影響",
+      "再現手順",
+      "改善のヒント",
+      "修正後の確認方法"
+    ],
+    "goal": "メニューを開いて、手続きの案内ページへ移動する。",
+    "expected_result": "メニューボタンの用途が分かり、目的のページへ進める。",
+    "sample_result": "「ボタン」とだけ読み上げられ、何の操作か判断できない。",
+    "sample_impact": "メニューの入口を見つけにくく、目的のページへの移動につまずく可能性がある。",
+    "reproduction_steps": [
+      "トップページを開く。",
+      "VoiceOverでメニューボタンに移動する。",
+      "ボタンの読み上げを聞き、メニューを開いて手続き案内へ進む。"
+    ],
+    "improvement_hint": "メニューボタンに用途が分かる名前を付け、開閉状態が支援技術に伝わるようにする。",
+    "recheck_steps": [
+      "同じ環境と手順で、ボタンの用途と開閉状態が伝わるか確かめる。",
+      "メニューを開き、手続き案内への移動を最後まで確認する。",
+      "キーボードによる操作の結果は、VoiceOverでの結果と分けて記録する。"
+    ],
+    "environment": {
+      "OS": "macOS（想定）",
+      "browser": "Safari（想定）",
+      "assistive_technology": "VoiceOver（想定）",
+      "versions": "未記録"
+    },
+    "unverified_scope": [
+      "他のページ・操作",
+      "スマートフォン",
+      "他のブラウザ・支援技術",
+      "キーボードによる操作"
+    ],
+    "supporting_information": [
+      "対象URL",
+      "評価日",
+      "採点方法は検討中",
+      "確認環境",
+      "未確認の範囲",
+      "関連する基準",
+      "補足・訂正"
+    ],
+    "related_criteria": "WCAGの関連要件は実測時に整理します。",
+    "desktop_layout": "上部に対象と点数。その下は本文と補助情報の2列。改善案を閉じたタブやアコーディオンに隠さない。",
+    "mobile_layout": "1列。対象・点数・主要環境を上部にまとめ、本文と補助情報を縦に続ける。"
+  },
+  "screen_briefs": [
+    {
+      "id": "01-home-desktop",
+      "path": "/",
+      "artboard_reference_px": [1440, 1500],
+      "sections": [
+        "ヘッダー",
+        "ヒーロー",
+        "最近評価したサイト5件",
+        "評価の考え方",
+        "補足・訂正",
+        "フッター"
+      ]
+    },
+    {
+      "id": "02-report-desktop",
+      "path": "/reports/sample-001/",
+      "artboard_reference_px": [1440, 1800],
+      "content": "report_detailを使用する。"
+    },
+    {
+      "id": "03-home-mobile",
+      "path": "/",
+      "artboard_reference_px": [390, 2000],
+      "content": "トップページを縦型に再構成する。収まらない項目は下へ続ける。"
+    },
+    {
+      "id": "04-report-mobile",
+      "path": "/reports/sample-001/",
+      "artboard_reference_px": [390, 2400],
+      "content": "report_detailのモバイルレイアウトを使用する。"
+    }
+  ],
+  "rendering_contract": {
+    "first_screen": "01-home-desktop",
+    "one_screen_per_image": true,
+    "presentation": "正面から見た精細なWebページのモック。端末枠、ブラウザの外枠、比較ボード、スライドの説明枠を付けない。",
+    "text_priority": "a11y Portal、最近評価したサイト、サイト名、点数、サンプル注記を正確に読めるようにする。",
+    "overflow_rule": "参照寸法に収めるために文字を縮小しない。ページの下部を自然に画面外へ続ける。"
+  },
+  "implementation_checks": [
+    "見出し・ナビゲーション・本文を意味のあるHTMLで構成する。",
+    "キーボードフォーカスを視認できるようにし、主要導線をキーボードとVoiceOverで確認する。",
+    "色だけで点数や状態を伝えず、ラベルと数値を文字で示す。",
+    "狭い表示・文字拡大・長いサイト名でも情報を欠落させない。",
+    "モックの見た目だけでアクセシビリティ適合済みと宣言しない。",
+    "実公開前に採点方式・実測データ・訂正連絡先を確定する。"
+  ],
+  "avoid": [
+    "旧サービス名をブランドとして画面に表示すること",
+    "点数を消して状態ラベルだけに戻すこと",
+    "点数順のランキングや合格認証マークへの変更",
+    "サンプル注記を消すこと、架空の評価を実在組織に結び付けること",
+    "資料のスライド配色やレイアウトの再現",
+    "未指定の検索・ログイン・自動診断・チャットウィジェットの追加",
+    "本文や評価一覧の半透明化、過剰な影、円形ゲージの多用",
+    "小さな低コントラスト文字、アイコンだけのリンク",
+    "1枚にPC・モバイル・別ページを合成すること"
+  ]
+}
