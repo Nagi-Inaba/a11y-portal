@@ -32,26 +32,57 @@
       "report_desktop": "04-design-samples/01-desktop-report-detail.png",
       "report_mobile": "04-design-samples/03-mobile-report-detail.png"
     },
-    "image_usage": "4枚は雰囲気と構図の参考。旧名称、実在しそうなURL、古い日付、過大な評価文、点数の欠落を転記しない。文言・データは本JSONを使う。",
+    "image_usage": "4枚は雰囲気と構図の参考。旧名称・旧シンボル、実在しそうなURL、古い日付、過大な評価文、点数の欠落を転記しない。文言・データは本JSON、シンボルはbrand.selected_iconを使う。",
     "latest_user_requirements": [
       "サイト名をa11y Portalにする",
       "トップページに最近評価したサイトの一覧を置く",
-      "一覧に点数を表示する"
+      "一覧に点数を表示する",
+      "青とチャコールのアーチ状アイコンを採用する（2026-09-13のユーザー指定）"
     ],
     "design_draft_overrides": [
       "旧サービス仮称を画面に表示すること",
       "トップ画面の表示例を1件に固定すること",
       "点数表示を一律に禁止すること"
     ],
-    "proposal_boundary": "サービス名・最近の評価一覧・点数表示は、今回提出されたv2.0から引き継ぐ設計方針。採点方法、100点満点、サンプル、アイコンは実測仕様として確定していない。元のコンセプト文書や評価データをこの草案で書き換えたものとは扱わない。"
+    "proposal_boundary": "サービス名・最近の評価一覧・点数表示は、提出されたv2.0から引き継ぐ設計方針。アイコンは2026-09-13のユーザー指定により採用。採点方法、100点満点、サンプルは実測仕様として確定していない。元のコンセプト文書や評価データをこの草案で書き換えたものとは扱わない。"
   },
   "brand": {
     "wordmark": "a11y Portal",
     "spelling_rule": "aは小文字、11は数字、yは小文字、半角スペースの後にPortal。ヘッダーとフッターで統一する。",
-    "current_symbol": "reference_images.home_desktopにあるプラムとグレーの重なった円形マークを暫定の形状参考にする。独立したロゴ素材は本JSONに含まれない。",
-    "new_icon_status": "別JSONで3案を検討中。採用決定前に新アイコンへ置き換えない。",
-    "future_logo_rule": "採用したアイコンと同じ輪郭のフラット版を、Webヘッダーのシンボルとして使う。",
-    "implementation_fallback": "ロゴ素材が揃うまではHTMLのa11y Portalだけで成立させる。画像全体をロゴとして切り出さない。隣に同じ名称のテキストがあるシンボルは装飾として扱う。"
+    "current_symbol": "青い帯と濃いチャコール、中央の白い抜きを持つアーチ状のシンボル。白い角丸の背景と影を含むユーザー提供画像を採用する。",
+    "new_icon_status": "2026-09-13にユーザーが採用を指定。旧シンボルと3案検討中の指定を更新する。",
+    "selected_icon": {
+      "file": "04-design-samples/06-adopted-icon.png",
+      "comparison_label": "03 チャコール × スカイブルー",
+      "decision": "adopted_by_user",
+      "selected_on": "2026-09-13",
+      "format": "PNG",
+      "width_px": 1254,
+      "height_px": 1254,
+      "size_bytes": 1608539,
+      "has_transparency": false,
+      "sha256": "a7d7e533e9cd698eb03e60d444b80a5ae7d8f450e109c58f726d8a28573a09c1",
+      "source_handling": "添付画像の原本を加工せず保存。小サイズ用や背景透過・フラット版を作る場合は別ファイルにする。"
+    },
+    "future_logo_rule": "Webヘッダーとfavicon用の派生版は、採用画像のアーチ状の輪郭と中央の抜きを保つ。現ファイルは白い背景を含む原画像であり、小サイズ用のフラット版は今後の制作対象。",
+    "implementation_fallback": "ヘッダーではa11y Portalの文字と組み合わせる。同じ名称を隣のテキストで伝える場合、シンボル画像のaltは空にする。アイコンだけがホームへのリンクになる場合は、リンク先とサービス名が分かる名前を付ける。",
+    "palette_integration": "採用アイコンの青と、現行案のプラム系UI配色を組み合わせてブラウザ上で確認する。UI全体の色トークンは現行案を維持する。",
+    "color_vision_considerations": {
+      "user_comment": "ユーザーは「色弱の人も見やすい」と述べている。",
+      "supplied_comparison": {
+        "file": "04-design-samples/07-icon-grayscale-comparison.png",
+        "original_filename": "sample5",
+        "width_px": 1488,
+        "height_px": 1040,
+        "size_bytes": 525711,
+        "sha256": "fdd00c4badc335b5778a96c3272bf5189ed14d1a21f6d17771b2afc8d6664a22",
+        "source_description": "資料には、同じ元画像から色だけを除去し、再生成・コントラスト補正なしと記載されている。変換処理は本タスクでは再実行していない。"
+      },
+      "visual_observation": "比較画像の03では、グレースケールでも帯と本体の明暗差、アーチの外形、中央の抜きを確認できる。32px・48pxと記された表示例にも中央の抜きが残る。",
+      "verification_status": "提供された比較画像を目視確認済み。色覚タイプ別のシミュレーション、実ブラウザの小サイズ表示、当事者による識別性の確認は未実施。画像上の表示例と実装後の確認結果は区別する。",
+      "next_checks": ["実ブラウザの16・32・48px表示で外形と中央の抜きを確認", "1型・2型・3型の色覚シミュレーションで補助確認", "実際の背景とフォーカス表示で確認", "可能なら色覚特性のある利用者に識別性を確認"],
+      "claim_rule": "色名を見分けられることを操作の前提にしない。シミュレーションだけで、すべての色覚特性に見やすいと断定しない。"
+    }
   },
   "art_direction": {
     "name": "Editorial Accessibility Portal",
