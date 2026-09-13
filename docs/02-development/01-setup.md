@@ -47,6 +47,34 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key
 
 `NEXT_PUBLIC_`付きの値は公開可能な設定に限定します。Secret keyや`service_role`キー、DBパスワードをここへ設定しないでください。
 
+### 3.1 マイグレーション
+
+DBスキーマはSupabase CLIのマイグレーションで管理します。現時点で`supabase/migrations/`は空です。コンセプト文書のとおりデータ形式が未確定のため、テーブルはまだ定義していません。仕組みだけ先に用意しています。
+
+新しいマイグレーションを作る場合は次を実行します。
+
+```sh
+supabase migration new <name>
+```
+
+`supabase/migrations/`にタイムスタンプ付きのSQLファイルが作られるので、そこへDDLを書きます。テーブルを追加する際はRLSを有効にし、公開してよいデータだけを取得できるポリシーを同じマイグレーションへ含めてください。
+
+ローカルのSupabaseで試す場合はDockerが必要です。
+
+```sh
+supabase start
+supabase db reset
+```
+
+本番への反映は`main`へのpushで自動実行されます。手元から反映する場合は次を実行します。
+
+```sh
+supabase link --project-ref gettckbtspwzaacybfaj
+supabase db push
+```
+
+`supabase/config.toml`はCLIの設定ファイルで、Gitの管理対象です。`supabase/.temp/`はキャッシュのため`supabase/.gitignore`で除外しています。
+
 ## 4. Vercelへの公開
 
 ### 4.1 公開済みのリソース
@@ -87,21 +115,30 @@ vercel env pull
 
 `main`へのpushで`.github/workflows/deploy.yml`が動き、本番へデプロイします。Actionsの画面から手動実行（workflow_dispatch）もできます。
 
-処理順は`npm ci` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`です。lintか型検査で失敗した場合はデプロイしません。
+ワークフローは`migrate`と`deploy`の2ジョブで構成します。先に`supabase db push`でDBスキーマを反映し、成功した場合のみアプリを配信します。`deploy`ジョブの処理順は`npm ci` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`で、lintか型検査で失敗した場合はデプロイしません。
 
 Vercel GitHub Appは使いません。Appのインストールにはリポジトリ所有者の承認が必要ですが、この方式はWrite権限だけで完結するためです。
 
-必要なリポジトリシークレットは次の3つです。
+必要なリポジトリシークレットは次のとおりです。
 
 | シークレット | 用途 |
 | --- | --- |
 | `VERCEL_TOKEN` | Vercelの[Account Tokens](https://vercel.com/account/settings/tokens)で発行したトークン |
 | `VERCEL_ORG_ID` | Vercelスコープのid。`.vercel/project.json`の`orgId` |
 | `VERCEL_PROJECT_ID` | Vercelプロジェクトのid。`.vercel/project.json`の`projectId` |
+| `SUPABASE_ACCESS_TOKEN` | Supabaseの[Access Tokens](https://supabase.com/dashboard/account/tokens)で発行したトークン |
+| `SUPABASE_DB_PASSWORD` | Supabaseプロジェクト作成時に設定したDBパスワード |
+| `SUPABASE_PROJECT_REF` | Supabaseプロジェクトのref |
 
 `.vercel/project.json`は`vercel link`で生成され、Gitの管理対象外です。
 
-Hobbyプランでは`vercel build`と`vercel deploy --prebuilt`を組み合わせたデプロイが`BLOCKED`になります。そのため事前ビルドはせず、ソースをアップロードしてVercel側でビルドしています。
+#### コミット作者の権限
+
+Vercelは、コミット作者がそのプロジェクトへデプロイする権限を持たない場合、デプロイを`BLOCKED`にします。理由はデプロイの`readyStateReason`で確認できます。
+
+このリポジトリのコミット作者は`seiichi3141@gmail.com`ですが、Vercelアカウントは`seiichiro.tanaka@hyucode.com`です。そのため<https://vercel.com/account>で`seiichi3141@gmail.com`を追加し、検証済みにしておく必要があります。
+
+コミット作者のメールアドレスを変えた場合や、別の人がコミットした場合も同じ理由でブロックされます。
 
 ### 4.5 手動デプロイ
 
