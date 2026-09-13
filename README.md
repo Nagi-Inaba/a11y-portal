@@ -2,7 +2,7 @@
 
 Webサイトの操作で困る箇所と改善方法を共有する、Webアクセシビリティ評価ポータルです。
 
-**Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** を使用します。トップページ、レポート一覧・詳細の読み取りAPI、`reports`テーブルのマイグレーションを用意しています。詳細画面・認証は未実装で、クラウドDBへの適用は別途必要です。
+**Next.js + TypeScript + Supabase（PostgreSQL）+ Vercel** を使用します。公開レポートの一覧・詳細、読み取りAPI、管理者向けCMSを用意しています。CMSでは評価JSONを下書きとして取り込み、内容の編集・プレビュー・公開・公開停止を行えます。利用にはDBマイグレーションの適用と管理者アカウントの登録が必要です。
 
 ## 起動
 
@@ -18,6 +18,8 @@ npm run dev
 
 `.env.example`の`REPORTS_DATA_SOURCE=sample`では、`/api/reports`と`/api/reports/SAMPLE-001`から架空のレポートを取得できます。DB接続時は`supabase`へ変更してください。
 
+公開画面は`/reports`、管理者画面は`/admin`です。サンプルモードではCMSへのログイン・保存はできません。[CMSの導入・操作手順](docs/02-development/05-report-cms.md)を参照してください。
+
 ## 確認コマンド
 
 ```sh
@@ -25,6 +27,9 @@ npm run lint
 npm run typecheck
 npm run build
 npm run test:api
+npm test
+npm run test:db
+npm run test:cms
 npm run start
 ```
 
@@ -50,5 +55,6 @@ docs/
 - [フェーズ別システム構成図](docs/02-development/02-system-architecture.md)
 - [最小DB・ER設計案](docs/02-development/03-database-er-proposal.md)
 - [レポートAPIの使い方](docs/02-development/04-reports-api.md)
+- [CMSの導入・操作手順](docs/02-development/05-report-cms.md)
 
 `docs`配下のディレクトリ・ファイルには、`01-`のような2桁の番号を付けて順序を固定します。

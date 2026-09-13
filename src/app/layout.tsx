@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,13 +17,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           本文へ移動
         </a>
         <header className="site-header">
-          <div className="container">Webアクセシビリティ観測室</div>
+          <div className="container"><Link href="/">Webアクセシビリティ観測室</Link></div>
         </header>
         <main id="main-content" className="container" tabIndex={-1}>
           {children}
         </main>
         <footer className="site-footer">
-          <div className="container">Webアクセシビリティ評価ポータル</div>
+          <div className="container footer-content"><span>Webアクセシビリティ評価ポータル</span><Link href="/admin">管理者ログイン</Link></div>
         </footer>
       </body>
     </html>

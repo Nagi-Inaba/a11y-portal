@@ -27,6 +27,7 @@ export async function listReports(limit: number, offset: number) {
   const { data, error, count } = await createSupabaseClient()
     .from("reports")
     .select(columns, { count: "exact" })
+    .eq("publication_status", "published")
     .order("id", { ascending: true })
     .range(offset, offset + limit - 1)
     .abortSignal(AbortSignal.timeout(10_000))
@@ -42,9 +43,18 @@ export async function getReport(id: string): Promise<Report | null> {
   const { data, error } = await createSupabaseClient()
     .from("reports")
     .select(columns)
+    .eq("publication_status", "published")
     .eq("id", id)
     .abortSignal(AbortSignal.timeout(10_000))
     .maybeSingle<Report>();
   if (error) throw new ReportsUnavailableError("Report query failed");
   return data;
+}
+
+export async function getPublishedDocument(id: string) {
+  if (dataSource() === "sample") return null;
+  const { data, error } = await createSupabaseClient().from("reports")
+    .select("document").eq("id", id).eq("publication_status", "published").maybeSingle();
+  if (error) throw new ReportsUnavailableError("Report query failed");
+  return data?.document ?? null;
 }

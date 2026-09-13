@@ -6,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
  * Server Components / Route Handlers から公開データへアクセスするためのクライアント。
  * ユーザー認証・セッション管理は含まない。アクセス範囲はDB側のRLSで制御する。
  */
-export function createSupabaseClient() {
+export function createSupabaseClient(accessToken?: string) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const publishableKey =
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
@@ -18,6 +18,10 @@ export function createSupabaseClient() {
   }
 
   return createClient(url, publishableKey, {
+    global: {
+      ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {}),
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store", signal: init?.signal ?? AbortSignal.timeout(10_000) }),
+    },
     auth: {
       persistSession: false,
       autoRefreshToken: false,
