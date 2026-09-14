@@ -44,6 +44,8 @@
 .cms-surface .task-section + .task-section, .cms-surface .finding-list > li + li { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
 .cms-surface .finding-list { padding-left: 1.5rem; }
 .cms-surface .preview-heading { margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #637780; }
+.cms-surface pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cms-surface dd, .cms-surface .preserve-lines { white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 40rem) {
   .cms-surface .cms-report-list > li { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .cms-surface .admin-nav button { margin-left: 0; }

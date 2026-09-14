@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon, ArticleIcon, CursorIcon, LightbulbIcon, MagnifyingGlassIcon, CaretRightIcon } from "@phosphor-icons/react/ssr";
-import { Corrections, DataUnavailable, ReportDate, ReportThumbnail, SampleNotice, Score, SectionHeading } from "@/components/portal";
+import { Corrections, DataUnavailable, MethodStatuses, ReportDate, ReportThumbnail, SampleNotice, Score, SectionHeading } from "@/components/portal";
 import { recentReports } from "@/lib/reports/repository";
 import { displayHost } from "@/lib/reports/presentation";
 
@@ -27,7 +27,7 @@ export default async function HomePage() {
         {reports === null ? <DataUnavailable /> : reports.length === 0 ? <div className="empty-state"><h3>評価レポートは準備中です</h3><p>確認した操作・環境・改善案を、ここからお届けします。</p></div> : <ul className="report-list">{reports.map(report => <li key={report.id}>
           <div className="report-identity"><ReportThumbnail report={report} small /><div><h3><Link href={`/reports/${encodeURIComponent(report.id)}`}>{report.title}<CaretRightIcon className="row-arrow" aria-hidden="true" /></Link></h3><p className="muted domain">{displayHost(report.target_url)}</p>{report.is_sample && <span className="sample-tag">サンプル</span>}</div></div>
           <div className="report-scope"><span className="field-label">対象ページ・範囲</span><p>{report.target_page_name}</p><p className="muted">{report.scope_summary}</p></div>
-          <div className="report-summary"><span className="field-label">評価の概要</span><p>{report.improvement_hint}</p></div>
+          <div className="report-summary"><span className="field-label">評価の概要</span><p>{report.improvement_hint}</p><MethodStatuses report={report} compact /></div>
           <div className="report-date"><ReportDate report={report} /></div><Score report={report} />
         </li>)}</ul>}
         <p className="score-note">点数の採点方法は検討中です。対象ページの評価であり、サイト全体の適合を保証するものではありません。</p>

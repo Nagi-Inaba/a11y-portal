@@ -7,6 +7,8 @@ import { MethodStatuses, ReportDate, ReportThumbnail, SampleNotice, Score } from
 import { getPublishedDocument, getReport } from "@/lib/reports/repository";
 import { parseCmsDocument } from "@/lib/cms/document";
 import { ReportDocument } from "@/components/report-document";
+import { CorrectionContact } from "@/components/correction-contact";
+import { ReportWorkflowLinks } from "@/components/report-workflow-links";
 import { formatDate, isExampleUrl, statusLabel } from "@/lib/reports/presentation";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +36,7 @@ export default async function ReportPage({ params }: Props) {
   const document = await getPublishedDocument(id);
   if (document) return <div className="container detail-page">
     <div className="detail-navigation"><Link className="text-link" href="/reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
-    <h1>{report.title}</h1><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
+    <h1>{report.title}</h1><ReportWorkflowLinks id={report.id} /><MethodStatuses report={report} /><div className="cms-surface"><ReportDocument report={parseCmsDocument(document)} /></div>
   </div>;
   const sample = report.is_sample;
   const env = report.environment;
@@ -43,6 +45,7 @@ export default async function ReportPage({ params }: Props) {
   return <div className="container detail-page">
     <div className="detail-navigation"><nav aria-label="パンくず"><ol><li><Link href="/#recent-reports">評価レポート</Link></li><li aria-current="page">{report.id}</li></ol></nav><Link className="text-link" href="/#recent-reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
     {sample && <SampleNotice detail />}
+    <ReportWorkflowLinks id={report.id} />
     <header className="report-header"><ReportThumbnail report={report} /><div className="report-header-copy"><p className="report-site-name">{report.title}</p><h1>{report.operation_summary}</h1><dl className="report-facts"><div><dt>対象ページ</dt><dd>{report.target_page_name}</dd></div><div><dt>対象範囲</dt><dd>{report.scope_summary}{sample && "（想定）"}</dd></div><div><dt>確認日</dt><dd>{formatDate(report.checked_on)}</dd></div></dl><div className="header-score"><Score report={report} /><p className="muted">採点方法は検討中です。<br />{sample ? "点数は画面設計用の表示例です。" : "サイト全体の適合を示すものではありません。"}</p></div></div></header>
     <MethodStatuses report={report} />
     <a className="text-link improvement-jump" href="#improvement">改善のヒントへ<ArrowRightIcon aria-hidden="true" /></a>
@@ -58,7 +61,7 @@ export default async function ReportPage({ params }: Props) {
       <section className="environment-section"><h2><MonitorIcon aria-hidden="true" />確認環境{sample && "（サンプル）"}</h2><dl className="environment"><div><dt>OS</dt><dd>{assumption(env.os)}</dd></div><div><dt>ブラウザ</dt><dd>{assumption(env.browser)}</dd></div><div><dt>支援技術</dt><dd>{assumption(env.assistive_technology)}</dd></div><div><dt>バージョン</dt><dd>{versions || "未記録"}</dd></div><div><dt>キーボード操作</dt><dd>{statusLabel(env.keyboard_status, sample)}</dd></div></dl></section>
       <section><h2><WarningCircleIcon aria-hidden="true" />未確認の範囲</h2>{report.unverified_scope.length ? <ul className="plain-list">{report.unverified_scope.map(item => <li key={item}>{item}</li>)}</ul> : <p>未記録</p>}</section>
       <section><h2><BookOpenIcon aria-hidden="true" />関連する基準</h2><p>{report.standards_note}</p></section>
-      <section><h2><PencilSimpleIcon aria-hidden="true" />補足・訂正</h2><p>連絡先は公開前に設定します。</p><Link className="text-link" href="/#corrections">補足・訂正について<ArrowRightIcon aria-hidden="true" /></Link></section>
+      <section><h2><PencilSimpleIcon aria-hidden="true" />補足・訂正</h2><CorrectionContact reportId={report.id} targetUrl={report.target_url} /><Link className="text-link" href="/#corrections">補足・訂正について<ArrowRightIcon aria-hidden="true" /></Link></section>
     </aside></div>
     <div className="detail-bottom"><Link className="text-link" href="/#recent-reports"><ArrowLeftIcon aria-hidden="true" />評価レポートに戻る</Link></div>
   </div>;

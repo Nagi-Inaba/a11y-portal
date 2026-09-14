@@ -6,8 +6,12 @@ import { once } from 'node:events';
 
 export const ADMIN_ID = '00000000-0000-4000-8000-000000000001';
 export const MEMBER_ID = '00000000-0000-4000-8000-000000000002';
+export const OTHER_ID = '00000000-0000-4000-8000-000000000003';
+export const WORKER_ID = '00000000-0000-4000-8000-000000000004';
 export const ADMIN_TOKEN = 'fixture-admin-token';
 export const MEMBER_TOKEN = 'fixture-member-token';
+export const OTHER_TOKEN = 'fixture-other-token';
+export const WORKER_TOKEN = 'fixture-worker-token';
 
 export async function createDatabase() {
   const db = new PGlite();
@@ -15,17 +19,21 @@ export async function createDatabase() {
     create table auth.users (id uuid primary key);
     create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
     grant usage on schema public, auth to anon, authenticated;
-    insert into auth.users values ('${ADMIN_ID}'), ('${MEMBER_ID}');`);
+    insert into auth.users values ('${ADMIN_ID}'), ('${MEMBER_ID}'), ('${OTHER_ID}'), ('${WORKER_ID}');`);
   await db.exec(await readFile('supabase/migrations/20260913000000_create_reports.sql', 'utf8'));
   await db.exec(await readFile('supabase/seed.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/20260913010000_report_cms.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/20260914000000_submissions_and_history.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/20260914010000_scan_jobs.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/20260914020000_comparisons.sql', 'utf8'));
+  await db.query('insert into public.scan_workers values ($1)', [WORKER_ID]);
   await db.query('insert into public.report_admins values ($1)', [ADMIN_ID]);
   return db;
 }
 
 export async function asUser(db, token, fn) {
   return db.transaction(async tx => {
-    const id = token === ADMIN_TOKEN ? ADMIN_ID : token === MEMBER_TOKEN ? MEMBER_ID : '';
+    const id = token === ADMIN_TOKEN ? ADMIN_ID : token === MEMBER_TOKEN ? MEMBER_ID : token === OTHER_TOKEN ? OTHER_ID : token === WORKER_TOKEN ? WORKER_ID : '';
     await tx.exec(`set local role ${id ? 'authenticated' : 'anon'}`);
     await tx.query("select set_config('request.jwt.claim.sub', $1, true)", [id]);
     return fn(tx);
@@ -44,7 +52,7 @@ export async function createCmsBackend() {
     res.setHeader('Content-Type', 'application/json');
     const url = new URL(req.url, 'http://localhost');
     const token = req.headers.authorization?.replace(/^Bearer /, '');
-    const user = token === ADMIN_TOKEN ? { id: ADMIN_ID, email: 'admin@example.test' } : token === MEMBER_TOKEN ? { id: MEMBER_ID, email: 'member@example.test' } : null;
+    const user = token === ADMIN_TOKEN ? { id: ADMIN_ID, email: 'admin@example.test' } : token === MEMBER_TOKEN ? { id: MEMBER_ID, email: 'member@example.test' } : token === OTHER_TOKEN ? { id: OTHER_ID, email: 'other@example.test' } : token === WORKER_TOKEN ? { id: WORKER_ID, email: 'worker@example.test' } : null;
     requests.push({ method: req.method, path: url.pathname, query: url.searchParams });
     try {
       const chunks = [];
@@ -52,17 +60,26 @@ export async function createCmsBackend() {
       const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : null;
       if (url.pathname === '/auth/v1/token') {
         const admin = body?.email === 'admin@example.test';
-        if (!['admin@example.test', 'member@example.test'].includes(body?.email) || body?.password !== 'fixture-password') {
+        const worker = body?.email === 'worker@example.test';
+        if (!['admin@example.test', 'member@example.test','worker@example.test'].includes(body?.email) || body?.password !== 'fixture-password') {
           res.writeHead(400); return res.end(JSON.stringify({ msg: 'Invalid login credentials' }));
         }
-        return res.end(JSON.stringify({ access_token: admin ? ADMIN_TOKEN : MEMBER_TOKEN, refresh_token: 'fixture-refresh-token', expires_in: 3600, token_type: 'bearer', user: { id: admin ? ADMIN_ID : MEMBER_ID, email: body.email } }));
+        return res.end(JSON.stringify({ access_token: admin ? ADMIN_TOKEN : worker ? WORKER_TOKEN : MEMBER_TOKEN, refresh_token: 'fixture-refresh-token', expires_in: 3600, token_type: 'bearer', user: { id: admin ? ADMIN_ID : worker ? WORKER_ID : MEMBER_ID, email: body.email } }));
       }
+      if (url.pathname === '/auth/v1/logout') { res.writeHead(204); return res.end(); }
       if (url.pathname === '/auth/v1/user') {
         if (!user) { res.writeHead(401); return res.end(JSON.stringify({ msg: 'Invalid token' })); }
         return res.end(JSON.stringify(user));
       }
+      if (url.pathname.startsWith('/rest/v1/rpc/')) {
+        const name = url.pathname.slice('/rest/v1/rpc/'.length);
+        if (!['create_report_submission', 'update_report_submission', 'accept_report_submission','save_scan_target','enqueue_scan','enqueue_scheduled_scans','claim_scan_job','finish_scan_job','create_scan_submission','create_comparison_case','enqueue_comparison_run','claim_comparison_run','record_comparison_progress','finish_comparison_run','review_comparison_run','publish_comparison'].includes(name) || req.method !== 'POST') throw new Error('Unexpected test RPC');
+        const keys = Object.keys(body);
+        const result = await asUser(db, token, tx => tx.query(`select public.${identifier(name)}(${keys.map((key, i) => `${identifier(key)} => $${i + 1}`).join(',')}) as value`, keys.map(key => typeof body[key] === 'object' && body[key] !== null && !Array.isArray(body[key]) ? JSON.stringify(body[key]) : body[key])));
+        return res.end(JSON.stringify(result.rows[0].value));
+      }
       const table = url.pathname.replace('/rest/v1/', '');
-      if (!['reports', 'report_admins'].includes(table)) { res.writeHead(404); return res.end('{}'); }
+      if (!['reports', 'report_admins', 'report_submissions', 'report_revisions','scan_targets','scan_jobs','scan_job_attempts','comparison_cases','comparison_runs','comparison_observations','comparison_publications'].includes(table)) { res.writeHead(404); return res.end('{}'); }
       const selected = (url.searchParams.get('select') ?? '*').split(',').map(value => value === '*' ? '*' : identifier(value)).join(',');
       const values = [];
       const bind = value => { values.push(value); return `$${values.length}`; };

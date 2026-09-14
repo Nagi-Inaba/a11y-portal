@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArticleIcon, MagnifyingGlassIcon, ArrowClockwiseIcon, InfoIcon, BuildingsIcon } from "@phosphor-icons/react/ssr";
 import { ReloadButton } from "./reload-button";
+import { CorrectionContact } from "./correction-contact";
 import type { ReactNode } from "react";
 import type { Report } from "@/lib/reports/api-types";
 import { formatDate, presentation, statusLabel } from "@/lib/reports/presentation";
@@ -34,17 +35,17 @@ export function ReportThumbnail({ report, small = false }: { report: Report; sma
   return <div className={small ? "report-mark" : "report-thumbnail"}>{thumbnail ? <Image src={thumbnail} alt="" width={small ? 56 : 320} height={small ? 40 : 213} sizes={small ? "56px" : "(max-width: 640px) 100vw, 280px"} /> : <BuildingsIcon size={small ? 30 : 72} weight="light" aria-hidden="true" />}</div>;
 }
 
-export function MethodStatuses({ report }: { report: Report }) {
+export function MethodStatuses({ report, compact = false }: { report: Report; compact?: boolean }) {
   const items = [
     { label: "自動検査", value: report.auto_check_status, Icon: ArticleIcon },
     { label: "操作確認", value: report.operation_status, Icon: MagnifyingGlassIcon },
     { label: "再評価", value: report.reevaluation_status, Icon: ArrowClockwiseIcon },
   ];
-  return <dl className="method-statuses">{items.map(({ label, value, Icon }) => <div key={label} className={value === "issues_found" || value === "issues_remaining" ? "has-issue" : ""}><dt><Icon size={25} weight="light" aria-hidden="true" />{label}</dt><dd>{statusLabel(value, report.is_sample)}</dd></div>)}</dl>;
+  return <dl className={`method-statuses${compact ? " method-statuses-compact" : ""}`}>{items.map(({ label, value, Icon }) => <div key={label} className={value === "issues_found" || value === "issues_remaining" ? "has-issue" : ""}><dt><Icon size={25} weight="light" aria-hidden="true" />{label}</dt><dd>{statusLabel(value, report.is_sample)}</dd></div>)}</dl>;
 }
 
 export function Corrections({ compact = false }: { compact?: boolean }) {
-  return <section id={compact ? undefined : "corrections"} className={compact ? "" : "corrections-section"} aria-label="補足・訂正"><h2>{compact ? "補足・訂正" : "補足・訂正について"}</h2><p>確認結果への補足や訂正を、次の改善につなげます。</p><p className="muted">連絡先は公開前に設定します。</p></section>;
+  return <section id={compact ? undefined : "corrections"} className={compact ? "" : "corrections-section"} aria-label="補足・訂正"><h2>{compact ? "補足・訂正" : "補足・訂正について"}</h2><p>確認結果への補足や訂正を、次の改善につなげます。</p><p><Link href="/contribute">ログインして評価・訂正を投稿する</Link></p><CorrectionContact /></section>;
 }
 
 export function DataUnavailable() {

@@ -1,4 +1,6 @@
 import type { Finding, Report } from "@/lib/reports/types";
+import { CorrectionContact } from "./correction-contact";
+import { isExampleUrl } from "@/lib/reports/presentation";
 
 export const outcomeLabels = {
   completed: "完了できた", "completed-with-workaround": "工夫して完了できた", blocked: "完了できなかった", "not-verified": "未確認",
@@ -19,7 +21,7 @@ export function ReportDocument({ report }: { report: Report }) {
     <section className="panel" aria-label="評価の対象と環境">
       <h2>{report.siteName}</h2>
       {report.source === "sample" && <p className="notice">サンプル：架空の評価データです。</p>}
-      <dl><dt>対象URL</dt><dd><a href={report.targetUrl} rel="noreferrer">{report.targetUrl}</a></dd>
+      <dl><dt>対象URL</dt><dd>{isExampleUrl(report.targetUrl) ? <span>{report.targetUrl}（架空の対象URL）</span> : <a href={report.targetUrl} rel="noreferrer">{report.targetUrl}</a>}</dd>
         <dt>確認した範囲</dt><dd>{report.scope}</dd>
         <dt>確認日時</dt><dd>{report.source === "sample" ? "サンプルのため実測日時なし" : <time dateTime={report.checkedAt}>{new Date(report.checkedAt).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" })}（日本時間）</time>}</dd>
         <dt>確認環境</dt><dd>{report.environment.os} / {report.environment.browser}{report.environment.assistiveTech ? ` / ${report.environment.assistiveTech}` : ""}</dd>
@@ -42,7 +44,7 @@ export function ReportDocument({ report }: { report: Report }) {
     <section className="panel"><h2>評価の範囲と連絡先</h2>
       <h3>未確認の範囲・制約</h3><ul>{report.limitations.map((limitation, i) => <li key={i}>{limitation}</li>)}</ul>
       <p>関連する達成基準は改善のための参照です。サイト全体の適合判定ではありません。</p>
-      <h3>補足・訂正の連絡先</h3><p>{report.contact}</p>
+      <h3>補足・訂正の連絡先</h3><p>{report.contact}</p><CorrectionContact reportId={report.id} targetUrl={report.targetUrl} />
     </section>
   </div>;
 }

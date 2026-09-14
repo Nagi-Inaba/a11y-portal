@@ -12,7 +12,7 @@ export async function cmsRequest(path: string, method: string, body?: unknown) {
   return result;
 }
 
-export function LoginForm() {
+export function LoginForm({ contributor = false }: { contributor?: boolean } = {}) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -20,8 +20,8 @@ export function LoginForm() {
     event.preventDefault(); setBusy(true); setError("");
     const form = new FormData(event.currentTarget);
     try {
-      await cmsRequest("/api/admin/session", "POST", { email: form.get("email"), password: form.get("password") });
-      router.replace("/admin/reports"); router.refresh();
+      await cmsRequest(contributor ? "/api/contributor/session" : "/api/admin/session", "POST", { email: form.get("email"), password: form.get("password") });
+      router.replace(contributor ? "/contribute" : "/admin/reports"); router.refresh();
     } catch (error) { setError(error instanceof Error ? error.message : "ログインできませんでした。"); }
     finally { setBusy(false); }
   }
@@ -37,7 +37,7 @@ export function AdminNav() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  return <><nav className="admin-nav" aria-label="管理者メニュー"><Link href="/admin/reports">レポート管理</Link><Link href="/reports">公開レポート</Link>
+  return <><nav className="admin-nav" aria-label="管理者メニュー"><Link href="/admin/reports">レポート管理</Link><Link href="/admin/submissions">投稿のレビュー</Link><Link href="/admin/scan-targets">検査対象</Link><Link href="/admin/comparisons">比較実験</Link><Link href="/contribute/scans">自動検査</Link><Link href="/reports">公開レポート</Link>
     <button className="secondary" disabled={busy} onClick={async () => {
       setBusy(true); setError("");
       try { await cmsRequest("/api/admin/session", "DELETE"); router.replace("/admin/login"); router.refresh(); }

@@ -21,14 +21,33 @@ export function cmsClient(token?: string) {
   return createSupabaseClient(token);
 }
 
-export async function verifyAdmin(token: string) {
+export async function verifyMember(token: string) {
   const client = cmsClient(token);
   const { data, error } = await client.auth.getUser(token);
   if (error || !data.user) throw new CmsError(401, "ログインの有効期限が切れました。もう一度ログインしてください。");
-  const membership = await client.from("report_admins").select("user_id").eq("user_id", data.user.id).maybeSingle();
+  return { client, user: data.user };
+}
+
+export async function verifyAdmin(token: string) {
+  const { client, user } = await verifyMember(token);
+  const membership = await client.from("report_admins").select("user_id").eq("user_id", user.id).maybeSingle();
   if (membership.error) throw new CmsError(503, "管理者権限を確認できません。時間をおいて再度お試しください。");
   if (!membership.data) throw new CmsError(403, "このアカウントには管理者権限がありません。");
   return client;
+}
+
+export async function requireMember() {
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  if (!token) throw new CmsError(401, "投稿者としてログインしてください。");
+  return verifyMember(token);
+}
+
+export async function requireMemberPage() {
+  try { return await requireMember(); }
+  catch (error) {
+    if (error instanceof CmsError) redirect(`/contribute/login?reason=${error.status}`);
+    throw error;
+  }
 }
 
 export async function requireAdmin() {
