@@ -69,7 +69,7 @@ supabase db reset
 本番への反映は`main`へのpushで自動実行されます。手元から反映する場合は次を実行します。
 
 ```sh
-supabase link --project-ref gettckbtspwzaacybfaj
+supabase link --project-ref zutmkpremkfthdlpgmsi
 supabase db push
 ```
 
@@ -81,13 +81,16 @@ supabase db push
 
 | 項目 | 値 |
 | --- | --- |
-| 本番URL | <https://a11y-portal.vercel.app> |
-| Vercelアカウント | `seiichiro.tanaka@hyucode.com` |
-| Vercelスコープ | `seiichirotanaka-4515s-projects` |
-| Vercelプロジェクト | `a11y-portal` |
-| Supabase組織 | `seiichiro.tanaka@hyucode.com's Org` |
-| Supabaseプロジェクト | `a11y-portal`（ref `gettckbtspwzaacybfaj` / ap-northeast-1） |
-| Supabaseダッシュボード | <https://supabase.com/dashboard/project/gettckbtspwzaacybfaj> |
+| 本番URL | 初回デプロイ後に確定（`a11y-portal.vercel.app`は旧環境が使用中） |
+| Vercelスコープ | `leaf-drop`（チーム名 Leafyflow） |
+| Vercelプロジェクト | `a11y-portal`（id `prj_rt64DiVGNiuQBzrPfprkUM0WOSOl`） |
+| Supabase組織 | `Nagi-Inaba's Org` |
+| Supabaseプロジェクト | `a11y-portal`（ref `zutmkpremkfthdlpgmsi` / ap-northeast-1） |
+| Supabaseダッシュボード | <https://supabase.com/dashboard/project/zutmkpremkfthdlpgmsi> |
+
+2026年10月、DBとホスティングを共同開発者の環境から上記へ移しました。新しいDBは空の状態から始めており、旧環境のレポート・管理者・投稿は移行していません。旧環境（Vercelスコープ`seiichirotanaka-4515s-projects`、Supabase ref `gettckbtspwzaacybfaj`）は共同開発者が管理しています。07〜09の記録に出てくる本番URL・データは旧環境のものです。
+
+Vercelのデプロイ保護（Vercel Authentication）は、プレビューと個別のデプロイURLだけにかけています（`prod_deployment_urls_and_all_previews`）。本番URLは誰でも閲覧できます。
 
 ### 4.2 ビルド設定
 
@@ -142,7 +145,7 @@ Transaction pooler（ポート6543）は使えません。マイグレーショ�
 
 Vercelは、コミット作者がそのプロジェクトへデプロイする権限を持たない場合、デプロイを`BLOCKED`にします。理由はデプロイの`readyStateReason`で確認できます。
 
-このリポジトリのコミット作者は`seiichi3141@gmail.com`ですが、Vercelアカウントは`seiichiro.tanaka@hyucode.com`です。そのため<https://vercel.com/account>で`seiichi3141@gmail.com`を追加し、検証済みにしておく必要があります。
+現在の主なコミット作者は`221035391+Nagi-Inaba@users.noreply.github.com`です。Vercelアカウントのメールアドレスと異なる場合は、<https://vercel.com/account>でこのアドレスを追加して検証済みにするか、GitHubアカウントを連携しておく必要があります。旧環境では`seiichi3141@gmail.com`を同じ手順で追加していました。
 
 コミット作者のメールアドレスを変えた場合や、別の人がコミットした場合も同じ理由でブロックされます。
 

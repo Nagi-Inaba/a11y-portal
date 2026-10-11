@@ -83,6 +83,5 @@ jobs:
           {
             echo "### 本番デプロイ完了"
             echo ""
-            echo "- 公開URL: https://a11y-portal.vercel.app"
             echo "- デプロイURL: ${{ steps.deploy.outputs.url }}"
           } >> "$GITHUB_STEP_SUMMARY"
