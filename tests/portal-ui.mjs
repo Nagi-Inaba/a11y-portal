@@ -56,6 +56,32 @@ try {
       await page.screenshot({ path: `${artifacts}/${name}-text-200.png`, fullPage: true });
     }
 
+    for (const [path, heading] of [['/terms', '利用条件・免責事項'], ['/privacy', 'プライバシーポリシー'], ['/accessibility', 'アクセシビリティ方針']]) {
+      for (const width of [1280, 320]) {
+        await page.setViewportSize({ width, height: 900 });
+        assert.equal((await page.goto(base + path)).status(), 200);
+        await page.getByRole('heading', { level: 1, name: heading, exact: true }).waitFor();
+        assert.ok((await page.title()).includes(heading));
+        assert.ok((await page.locator('main').innerText()).length > 200);
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path}: overflow at ${width}px`);
+        const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
+        assert.deepEqual(scan.violations.map(item => ({ id: item.id, targets: item.nodes.map(node => node.target) })), [], `${path}: axe at ${width}px`);
+        await page.screenshot({ path: `${artifacts}/${path.slice(1)}-${width}.png`, fullPage: true });
+      }
+      await page.setViewportSize({ width: 1280, height: 900 });
+      await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path}: overflow with 200% text`);
+    }
+    await page.goto(base);
+    await tabTo(page, page.getByRole('navigation', { name: 'サイト情報' }).getByRole('link', { name: '利用条件・免責事項', exact: true }));
+    await page.keyboard.press('Enter');
+    await page.waitForURL(`${base}/terms`);
+    await tabTo(page, page.getByRole('link', { name: 'プライバシーポリシーの連絡窓口' }));
+    await page.keyboard.press('Enter');
+    await page.waitForURL(`${base}/privacy#contact`);
+    await page.getByRole('heading', { name: '運営者・連絡窓口・開示等の請求' }).waitFor();
+    console.log('PASS policies: footer keyboard links, headings, titles, contact anchor, 1280/320px reflow, 200% text, axe');
+
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(base);
     await page.keyboard.press('Tab');

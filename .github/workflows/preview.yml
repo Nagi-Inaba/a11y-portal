@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: team_R8Js7RK1A8H8S68E6DCiAaZ7
+      VERCEL_PROJECT_ID: prj_rt64DiVGNiuQBzrPfprkUM0WOSOl
       VERCEL_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout

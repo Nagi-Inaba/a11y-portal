@@ -18,6 +18,8 @@ jobs:
   # DBスキーマを先に反映してからアプリを配信する。
   migrate:
     name: Apply migrations
+    # 新環境のDB接続情報を設定してから、リポジトリ変数で自動反映を有効にする。
+    if: github.event_name == 'workflow_dispatch' || vars.PRODUCTION_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -28,6 +30,16 @@ jobs:
         uses: supabase/setup-cli@v3
         with:
           version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Verify database target
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: node scripts/verify-deploy-target.mjs
 
       # Management APIは使わず、接続文字列でDBへ直接つなぐ。`supabase link`が不要になり、
       # アクセストークンも持たせずに済む。権限はDBユーザーの範囲に限定される。
@@ -45,8 +57,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: team_R8Js7RK1A8H8S68E6DCiAaZ7
+      VERCEL_PROJECT_ID: prj_rt64DiVGNiuQBzrPfprkUM0WOSOl
       VERCEL_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout

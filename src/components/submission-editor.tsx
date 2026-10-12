@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   outcomeLabels,
@@ -350,6 +351,7 @@ function removeCriterion(taskIndex: number, findingIndex: number, criterionIndex
       </div>
       <label>未確認の範囲・制約<textarea rows={4} disabled={busy || !canEdit} value={document.limitations.join("\n")} onChange={event => setEditableDocument({ ...document, limitations: event.target.value ? event.target.value.split("\n") : [] })} /></label>
       <label>補足・訂正の連絡先<input value={document.contact} disabled={busy || !canEdit} required onChange={event => setEditableDocument({ ...document, contact: event.target.value })} /></label>
+      <p>提出前に<Link href="/terms">利用条件・免責事項</Link>と<Link href="/privacy">プライバシーポリシー</Link>をご確認ください。公開レビューを経て、本文と連絡先が公開されます。個人情報や非公開情報を含めないでください。</p>
       <div className="actions">
         <button type="submit" disabled={!canSave}>{busy ? "保存中…" : canEdit ? "下書きを保存" : "保存不可"}</button>
         <button type="button" disabled={busy || !canSubmit || publishedIssues.length > 0} onClick={() => void submitSubmission()}>{busy ? "提出中…" : "提出する"}</button>

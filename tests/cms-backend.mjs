@@ -16,6 +16,7 @@ export const WORKER_TOKEN = 'fixture-worker-token';
 export async function createDatabase() {
   const db = new PGlite();
   await db.exec(`create role anon; create role authenticated; create schema auth;
+    alter default privileges in schema public grant execute on functions to anon, authenticated;
     create table auth.users (id uuid primary key);
     create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
     grant usage on schema public, auth to anon, authenticated;
@@ -26,6 +27,7 @@ export async function createDatabase() {
   await db.exec(await readFile('supabase/migrations/20260914000000_submissions_and_history.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/20260914010000_scan_jobs.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/20260914020000_comparisons.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/20261012142500_explicit_function_permissions.sql', 'utf8'));
   await db.query('insert into public.scan_workers values ($1)', [WORKER_ID]);
   await db.query('insert into public.report_admins values ($1)', [ADMIN_ID]);
   return db;

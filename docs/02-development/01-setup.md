@@ -12,7 +12,7 @@
 | 実行環境・パッケージ管理 | Node.js 22.x / npm / package-lock.json |
 | スタイル・静的検査 | 通常のCSS / ESLint |
 
-本テンプレートは起動可能な最小構成です。評価の一覧・詳細機能、認証、DBスキーマ・マイグレーションはまだ含みません。Supabase・Vercelのクラウドリソースは作成・公開済みで、詳細は「4. Vercelへの公開」に記載しています。
+公開レポート、管理者CMS、投稿・訂正・履歴、自動検査、比較実験を実装しています。Webアプリの公開と、独立ワーカーの配備・実モデルによる検証は別に行います。公開先の情報は「4. Vercelへの公開」に記載しています。
 
 ## 2. ローカルでの起動
 
@@ -66,7 +66,7 @@ supabase start
 supabase db reset
 ```
 
-本番への反映は`main`へのpushで自動実行されます。手元から反映する場合は次を実行します。
+自動反映には「4.4」の新環境用設定が必要です。手元から反映する場合は次を実行します。
 
 ```sh
 supabase link --project-ref zutmkpremkfthdlpgmsi
@@ -116,7 +116,7 @@ vercel env pull
 
 ### 4.4 自動デプロイ（GitHub Actions）
 
-`main`へのpushで`.github/workflows/deploy.yml`が動き、本番へデプロイします。Actionsの画面から手動実行（workflow_dispatch）もできます。
+新環境用の`SUPABASE_DB_URL`と`VERCEL_TOKEN`を設定し、リポジトリ変数`PRODUCTION_DEPLOY_ENABLED=true`を設定すると、`main`へのpushで本番反映します。移行中の初期値では自動反映を止め、旧環境のSecretsを使わないようにしています。Actionsの手動実行（workflow_dispatch）は有効ですが、同じ接続先チェックを通る必要があります。
 
 ワークフローは3本あります。PRでの検査は`ci.yml`、`develop`へのpushでのプレビューデプロイは`preview.yml`が担当します。詳細は[ブランチ戦略](02-branch-strategy.md)を参照してください。
 
@@ -129,11 +129,17 @@ Vercel GitHub Appは使いません。Appのインストールにはリポジト
 | シークレット | 用途 |
 | --- | --- |
 | `VERCEL_TOKEN` | Vercelの[Account Tokens](https://vercel.com/account/settings/tokens)で発行したトークン |
-| `VERCEL_ORG_ID` | Vercelスコープのid。`.vercel/project.json`の`orgId` |
-| `VERCEL_PROJECT_ID` | Vercelプロジェクトのid。`.vercel/project.json`の`projectId` |
 | `SUPABASE_DB_URL` | SupabaseのSession pooler（ポート5432）への接続文字列。DBパスワードを含む |
 
 `.vercel/project.json`は`vercel link`で生成され、Gitの管理対象外です。
+
+Vercelの組織・プロジェクトIDはワークフローで新環境に固定しています。`scripts/verify-deploy-target.mjs`がDB接続先のプロジェクト・接続ユーザー・ポートを検証し、不一致ならマイグレーション前に停止します。接続文字列やパスワードはログに出しません。
+
+認証済みのVercel CLIで初回公開する場合は、`vercel link --project a11y-portal --scope leaf-drop`で接続先を確認してから、`vercel deploy --prod --yes --scope leaf-drop`を実行します。DBスキーマは先に適用してください。
+
+### 4.5 公開時の説明ページ
+
+`/terms`（利用条件・免責事項）、`/privacy`（プライバシーポリシー）、`/accessibility`（アクセシビリティ方針）を全ページのフッターから開けます。`SITE_OPERATOR_NAME`と`PRIVACY_CONTACT_EMAIL`を本番環境に設定してください。連絡先には、非公開で個人情報の相談を受け付けられる公開可能なメールアドレスを指定します。設定後は再ビルド・再デプロイが必要です。
 
 `migrate`ジョブはSupabaseのManagement APIを使いません。`supabase db push`へ接続文字列を直接渡すため、アクセストークンは不要です。CIへ渡す権限がDBユーザーの範囲に収まります。
 

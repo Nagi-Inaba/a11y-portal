@@ -5,6 +5,16 @@ import { parseCmsDocument, toReportRow } from '../src/lib/cms/document.ts';
 
 const db = await createDatabase();
 try {
+  const anonymousFunctions = await db.query("select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and has_function_privilege('anon',p.oid,'execute')");
+  assert.deepEqual(anonymousFunctions.rows, [], 'Supabase default grants must not expose anonymous RPCs');
+  assert.equal((await db.query("select has_function_privilege('authenticated','public.create_report_submission(text,text,jsonb,text,integer)','execute') as allowed")).rows[0].allowed, true);
+  for (const signature of ['public.capture_report_revision()', 'public.comparison_public_fields(jsonb)', 'public.accept_report_submission_for_reviewer(uuid,integer,jsonb,text)']) {
+    assert.equal((await db.query("select has_function_privilege('authenticated',$1,'execute') as allowed", [signature])).rows[0].allowed, false);
+  }
+  await db.exec('create function public.permission_probe() returns boolean language sql as $$ select true $$');
+  for (const role of ['anon', 'authenticated']) assert.equal((await db.query("select has_function_privilege($1,'public.permission_probe()','execute') as allowed", [role])).rows[0].allowed, false);
+  await db.exec('drop function public.permission_probe()');
+  console.log('PASS function permissions: Supabase default grants, anonymous RPC denial, internal helper denial, explicit authenticated entry points');
   const draft = parseCmsDocument(JSON.parse(await readFile('src/data/reports/a11y-portal-vercel-app-2026-09-13.json', 'utf8')));
   const row = toReportRow(draft);
   const insert = async (tx: { query: (query: string, values?: unknown[]) => Promise<unknown> }) => {

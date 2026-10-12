@@ -42,7 +42,9 @@ jobs:
         run: npm run build
 
       - name: Unit tests
-        run: npm test
+        run: |
+          npm test
+          node --test tests/deploy-target.test.mjs
 
       - name: Database policies and publication rules
         run: npm run test:db
