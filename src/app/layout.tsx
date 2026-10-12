@@ -8,6 +8,7 @@ import "./cms.css";
 export const metadata: Metadata = {
   title: { default: "a11y Portal | 操作と改善の公開記録", template: "%s | a11y Portal" },
   description: "操作のつまずき、確認した条件、改善のヒントをひとつに。Webサイトのアクセシビリティ評価を公開するポータル。",
+  icons: { icon: "/images/brand-icon.png" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

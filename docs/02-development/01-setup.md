@@ -81,7 +81,7 @@ supabase db push
 
 | 項目 | 値 |
 | --- | --- |
-| 本番URL | 初回デプロイ後に確定（`a11y-portal.vercel.app`は旧環境が使用中） |
+| 本番URL | <https://a11y-portal-leaf-drop.vercel.app>（`a11y-portal.vercel.app`は旧環境） |
 | Vercelスコープ | `leaf-drop`（チーム名 Leafyflow） |
 | Vercelプロジェクト | `a11y-portal`（id `prj_rt64DiVGNiuQBzrPfprkUM0WOSOl`） |
 | Supabase組織 | `Nagi-Inaba's Org` |
