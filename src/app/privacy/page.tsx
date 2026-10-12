@@ -6,7 +6,12 @@ export const metadata: Metadata = { title: "プライバシーポリシー", des
 
 export default function PrivacyPage() {
   const contact = process.env.PRIVACY_CONTACT_EMAIL?.trim();
-  const operator = process.env.SITE_OPERATOR_NAME?.trim() || "Nagi-Inaba";
+  let contactUrl: string | undefined;
+  try {
+    const url = new URL(process.env.PRIVACY_CONTACT_URL?.trim() || "");
+    if (url.protocol === "https:") contactUrl = url.href;
+  } catch { /* A missing or invalid optional form URL is not published. */ }
+  const operator = process.env.SITE_OPERATOR_NAME?.trim() || "稲葉凪";
   return <PolicyPage title="プライバシーポリシー">
     <p>a11y Portal（以下「本サイト」）は、閲覧、ログイン、投稿、評価の運用に伴って取り扱う情報について、次のとおり説明します。</p>
     <section><h2>取得する情報と利用目的</h2>
@@ -40,7 +45,7 @@ export default function PrivacyPage() {
     </section>
     <section id="contact"><h2>運営者・連絡窓口・開示等の請求</h2>
       <p>運営者：{operator}</p>
-      {contact ? <p>連絡窓口：<a href={`mailto:${contact}`}>{contact}</a></p> : <p>非公開の問い合わせ先は公開準備中です。</p>}
+      {contact ? <p>連絡窓口：<a href={`mailto:${contact}`}>{contact}</a></p> : contactUrl ? <p>連絡窓口：<a href={contactUrl}>非公開の問い合わせフォーム</a></p> : <p>非公開の問い合わせ先は公開準備中です。</p>}
       <p>ご本人の個人情報の利用目的の通知、開示、訂正、利用停止・削除、第三者提供の停止等の相談は、この窓口へお知らせください。対象のレポートURLなど、情報の特定に必要な内容を添えてください。必要な範囲で本人確認を行い、適用法令に従って対応します。住所など、運営者について法令上必要な情報の確認も同じ窓口で受け付けます。</p>
       <p>パスワードや本人確認書類を最初の連絡に添付しないでください。第三者が保存した公開情報は、本サイト側の訂正・公開停止だけでは削除できない場合があります。</p>
     </section>

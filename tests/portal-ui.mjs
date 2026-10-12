@@ -63,6 +63,7 @@ try {
         await page.getByRole('heading', { level: 1, name: heading, exact: true }).waitFor();
         assert.ok((await page.title()).includes(heading));
         assert.ok((await page.locator('main').innerText()).length > 200);
+        if (path === '/privacy') assert.ok((await page.locator('main').innerText()).includes('運営者：稲葉凪'));
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path}: overflow at ${width}px`);
         const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
         assert.deepEqual(scan.violations.map(item => ({ id: item.id, targets: item.nodes.map(node => node.target) })), [], `${path}: axe at ${width}px`);
