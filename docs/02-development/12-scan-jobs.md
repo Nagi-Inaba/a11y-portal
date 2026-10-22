@@ -7,7 +7,7 @@
 1. 既存SQLに続けて `supabase/migrations/20260914010000_scan_jobs.sql` を適用します。既存の公開レポート・投稿は保持されます。
 2. Supabase Authに検査ワーカー専用アカウントを作成し、確認済みにします。そのUUIDをSQL管理者が `public.scan_workers(user_id)` に登録します。このアカウントを `report_admins` に登録したり、投稿者として共用したりしないでください。サービスロールキーは不要です。
 3. 管理者が `/admin/scan-targets` から、検査してよい公開URL、追加接続先、確認目標を登録します。URLと接続先は実行履歴を維持するため変更できません。変更時は旧対象を停止し、新しい対象を登録します。
-4. Node.js 22、`npm ci`で入れた依存関係、インストール済みのGoogle Chromeをワーカー実行環境に用意します。Chromeの実行ファイルを確認し、絶対パスを指定します。Windowsでは署名済みシステムChromeを使用します。Playwright同梱Chromiumのダウンロードは不要です。
+4. Node.js 22.23.4以降の22系、`npm ci`で入れた依存関係、インストール済みのGoogle Chromeをワーカー実行環境に用意します。Chromeの実行ファイルを確認し、絶対パスを指定します。Windowsでは署名済みシステムChromeを使用します。Playwright同梱Chromiumのダウンロードは不要です。
 5. **ワーカー専用**の環境変数に、次の値を設定します。秘密情報をWebアプリの環境やリポジトリへ入れないでください。
 
 | 環境変数 | 内容 |

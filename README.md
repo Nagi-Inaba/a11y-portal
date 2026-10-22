@@ -6,7 +6,7 @@ Webサイトの操作で困る箇所と改善方法を共有する、Webアク�
 
 ## 起動
 
-Node.js 22.xとnpmを使用します。nvmを利用している場合は、最初に`nvm use`を実行してください。
+Node.js 22.23.4以降の22系とnpmを使用します。`.nvmrc`はセキュリティ修正版の22.23.4を指定しています。nvmを利用している場合は、最初に`nvm use`を実行してください。
 
 ```sh
 npm ci
@@ -33,6 +33,7 @@ npm run dev
 ## 確認コマンド
 
 ```sh
+npm run audit:prod
 npm run lint
 npm run typecheck
 npm run build
@@ -44,6 +45,8 @@ npm run start
 ```
 
 `npm run start`はビルド後の本番動作確認用です。
+
+`npm run audit:prod`は実行時の依存パッケージを監査し、既知の脆弱性を検出すると失敗します。開発用を含む全依存の確認には`npm audit`を実行してください。[2026年10月のセキュリティ更新記録](docs/02-development/15-security-updates.md)に更新内容と残る指摘を記載しています。
 
 インストール済みのGoogle Chromeで`npm run test:ui`を実行すると、キーボード導線・表示・自動アクセシビリティ検査を確認できます。[初期版計画との対応と検証手順](docs/02-development/10-initial-plan-follow-up.md)に、確認範囲と残る作業を記載しています。
 

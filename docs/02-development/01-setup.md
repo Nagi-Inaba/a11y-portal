@@ -9,7 +9,7 @@
 | データアクセス | Supabase JavaScriptクライアント |
 | データベース | Supabaseが提供するPostgreSQL |
 | ホスティング | Vercel |
-| 実行環境・パッケージ管理 | Node.js 22.x / npm / package-lock.json |
+| 実行環境・パッケージ管理 | Node.js 22.23.4以降の22系 / npm / package-lock.json |
 | スタイル・静的検査 | 通常のCSS / ESLint |
 
 公開レポート、管理者CMS、投稿・訂正・履歴、自動検査、比較実験を実装しています。Webアプリの公開と、独立ワーカーの配備・実モデルによる検証は別に行います。公開先の情報は「4. Vercelへの公開」に記載しています。
@@ -17,6 +17,8 @@
 ## 2. ローカルでの起動
 
 リポジトリのルートで実行します。
+
+`.nvmrc`はNode.js 22.23.4を指定しています。nvmを使用する場合は先に`nvm use`を実行してください。Node.js本体の更新は`npm ci`では行われないため、ワーカーを含む各実行環境でも22.23.4以降の22系を用意します。
 
 ```sh
 npm ci
@@ -100,7 +102,7 @@ Next.jsの標準構成をそのまま使うため、独自の`vercel.json`は不
 | --- | --- |
 | Framework Preset | Next.js |
 | Root Directory | リポジトリのルート |
-| Node.js Version | 22.x（`package.json`の`engines`で指定） |
+| Node.js Version | 22.x（`engines`は`>=22.23.4 <23`。Vercel側の実際のパッチ版はデプロイ時に別途確認） |
 | Build Command | `next build` |
 | Output Directory | Next.jsのデフォルトのまま |
 
@@ -120,7 +122,7 @@ vercel env pull
 
 ワークフローは3本あります。PRでの検査は`ci.yml`、`develop`へのpushでのプレビューデプロイは`preview.yml`が担当します。詳細は[ブランチ戦略](02-branch-strategy.md)を参照してください。
 
-ワークフローは`migrate`と`deploy`の2ジョブで構成します。先に`supabase db push`でDBスキーマを反映し、成功した場合のみアプリを配信します。`deploy`ジョブの処理順は`npm ci` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`で、lintか型検査で失敗した場合はデプロイしません。
+ワークフローは`migrate`と`deploy`の2ジョブで構成します。先に`supabase db push`でDBスキーマを反映し、成功した場合のみアプリを配信します。`deploy`ジョブの処理順は`npm ci` → `npm run audit:prod` → `npm run lint` → `npm run typecheck` → `vercel deploy --prod`で、依存監査・lint・型検査のいずれかが失敗した場合はアプリをデプロイしません。PRのCIとプレビューデプロイにも同じ依存監査を設定しています。DBマイグレーションはこの監査より先に実行されます。
 
 Vercel GitHub Appは使いません。Appのインストールにはリポジトリ所有者の承認が必要ですが、この方式はWrite権限だけで完結するためです。
 
